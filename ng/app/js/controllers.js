@@ -11,8 +11,9 @@ var compareProjectsByLastUpdate = function compare(p1,p2) {
 
 
 angular.module('tutt.controllers', []).
-    controller('ProjectsCtrl', ['$scope','Project',function($scope,Project) {
+    controller('ProjectsCtrl', ['$scope','$http','Project','Sessions',function($scope,$http,Project,Sessions) {
         $scope.projects = Project.query()
+        $scope.sessions = Sessions.query()
 
         $scope.startedProject = Project.started()
             
@@ -21,6 +22,7 @@ angular.module('tutt.controllers', []).
             $scope.startedProject.$start()
             // pour refresh de l'ordre TODO faire mieux que refaire une requête
             $scope.projects = Project.query()
+            $scope.sessions = Sessions.query()
         }
         $scope.stop = function(project) {
             if ($scope.startedProject) {
@@ -29,14 +31,20 @@ angular.module('tutt.controllers', []).
             }
             // pour refresh de l'ordre TODO faire mieux que refaire une requête
             $scope.projects = Project.query()
-
+            $scope.sessions = Sessions.query()
         }
         $scope.isStarted = function(project) {
             return $scope.startedProject && $scope.startedProject.id == project.id
         }
+        $scope.create = function(query) {
+            $http.post('/create', query).success(function() {
+                $scope.projects = Project.query()    
+            });
+
+        }
         
     }])
-    .controller('ProjectCtrl', ['$scope','$routeParams','Project', function($scope,$routeParams,Project) {
+  /*  .controller('ProjectCtrl', ['$scope','$routeParams','Project', function($scope,$routeParams,Project) {
         $scope.project = Project.get({projectId: $routeParams.projectId}, null)
         
         $scope.update = function(project) {
@@ -47,5 +55,5 @@ angular.module('tutt.controllers', []).
             $scope.project.$delete({'projectId':project.id})
         }
         
-    }])
+    }])*/
     .controller('InfosCtrl', [function() { }]);

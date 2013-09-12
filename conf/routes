@@ -1,11 +1,14 @@
 # Routes
 
+POST	/create						Application.create
 
 GET		/projects					Application.all
 GET 	/projects/{projectId}		Application.find
 POST 	/projects					Application.post
 DELETE	/projects/{projectId}		Application.delete
 
+
+GET		/sessions					Application.allSessions
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

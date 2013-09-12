@@ -12,5 +12,10 @@ angular.module('tutt.services', ['ngResource'])
             started: {method:'GET',params:{started:true}}
         })
     })
+    .factory('Sessions',function($resource){
+        return $resource('/sessions', {}, {
+                query: {method:'GET', params:{}, isArray:true}
+        })
+    })
 
 /* Voir http://ngmodules.org/modules/ngStorage pour localStorage */

@@ -1,24 +1,27 @@
 package models;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
+import javax.persistence.Entity;
 
 import play.Logger;
+import play.data.validation.MaxSize;
+import play.data.validation.Required;
+import play.db.jpa.Model;
 
-public class Project {
+@Entity
+public class Project extends Model {
 
-	public long id;
+	@MaxSize(255)
+	@Required
 	public String label;
+
 	public Date lastUpdate;
 
-	private static List<Project> PROJECTS;
-
-	public Project(final long id, final String label) {
+	public Project(final String label) {
 		super();
-		this.id = id;
 		this.label = label;
-		this.lastUpdate = new Date();
+		lastUpdate = new Date();
 	}
 
 	@Override
@@ -26,31 +29,23 @@ public class Project {
 		return "Project [id=" + id + ", label=" + label + "]";
 	}
 
-	public static List<Project> all() {
-		if (PROJECTS == null) {
-			PROJECTS = new ArrayList<Project>();
-			PROJECTS.add(new Project(1, "Tutt"));
-			PROJECTS.add(new Project(2, "Fête de la montagne 2014"));
-			PROJECTS.add(new Project(3, "Pro-montagne"));
-		}
-		return PROJECTS;
-	}
-
-	public static Project find(final long id) {
-		Logger.debug("Project.find(%s)", id);
-		if (id == 0) {
-			return new Project(all().size() + 1, "Mon nouveau projet");
-		}
-		return all().get((int) id - 1);
-	}
-
 	public void start() {
 		Logger.debug("start %s", this);
 		lastUpdate = new Date();
+		final WorkingSession session = WorkingSession.findNonStoppedSession();
+		if (session != null) {
+			session.project.stop();
+		}
+		final WorkingSession newSession = new WorkingSession(this);
+		newSession.create();
 	}
 
 	public void stop() {
 		Logger.debug("stop %s", this);
+		final WorkingSession session = WorkingSession.findNonStoppedSession();
+		// TODO check que c'est le bon projet ?
+		session.stop = new Date();
+		session.save();
 		// -1 sec pour pas avoir la même date que le projet qui starte en même
 		// temps
 		lastUpdate = new Date(System.currentTimeMillis() - 1000);

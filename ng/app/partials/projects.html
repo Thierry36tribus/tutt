@@ -1,10 +1,17 @@
-<div><input ng-model="query"></div>
-<div ng-show="startedProject != null && startedProject.label">You're working on {{startedProject.label}}<button ng-click="stop(startedProject)">Stop</button></div>
-
-<ul>
-    <li ng-repeat="project in projects | filter:query | orderBy:'lastUpdate':true">
-        <a ng-href="#/project/{{project.id}}">{{project.label}}</a><button ng-show="!isStarted(project)" ng-click="start(project)">Start</button>
-    </li>
-</ul>
-
-<a ng-href="#/project/0">Create</a>
+<div>
+    <div><input ng-model="query"></div>
+    <div ng-show="startedProject != null && startedProject.label">You're working on {{startedProject.label}} since {{startedProject.lastUpdate}}<button ng-click="stop(startedProject)">Stop</button></div>    
+    <ul>
+        <li ng-repeat="project in projects | filter:query | orderBy:'lastUpdate':true">
+            <a ng-href="#/project/{{project.id}}">{{project.label}}</a><button ng-show="!isStarted(project)" ng-click="start(project)">Start</button>
+        </li>
+    </ul>
+    <button ng-show="query.length > 0" ng-click="create(query)">Create {{query}}</button>
+</div>
+<div>
+    <ul>
+        <li ng-repeat="session in sessions | orderBy:'start':true">
+            {{session.start}} -> {{session.stop}} : {{session.project.label}}
+        </li>
+    </ul>
+</div>
