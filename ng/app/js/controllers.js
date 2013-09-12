@@ -8,7 +8,14 @@ var compareProjectsByLastUpdate = function compare(p1,p2) {
   return 0;
 }
 
-
+var calcDuration = function(session) {
+    var stop = session.stop
+    if (!stop) {
+        stop = session.start
+        //stop = new Date().getTime()
+    }
+    return (stop - session.start)/1000    
+}
 
 angular.module('tutt.controllers', []).
     controller('ProjectsCtrl', ['$scope','$http','Project','Sessions',function($scope,$http,Project,Sessions) {
@@ -44,7 +51,9 @@ angular.module('tutt.controllers', []).
             });
 
         }
-        
+        $scope.duration = function(session) {
+            return calcDuration(session)
+        }        
     }])
    .controller('ProjectCtrl', ['$scope','$routeParams','$location','Project','Sessions', function($scope,$routeParams,$location,Project,Sessions) {
         $scope.project = Project.get({projectId: $routeParams.projectId}, null)
@@ -57,6 +66,10 @@ angular.module('tutt.controllers', []).
         $scope.delete =function(project) {
             $scope.project.$delete({'projectId':project.id})
              $location.path( "/" );
+        }
+        
+        $scope.duration = function(session) {
+            return calcDuration(session)
         }
         
     }])

@@ -9,7 +9,7 @@
 <div>
     <ul>
         <li ng-repeat="session in sessions | orderBy:'start':true">
-            {{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'MM/dd HH:mm'}}
+            {{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'MM/dd HH:mm'}} = {{duration(session)}} sec
         </li>
     </ul>
 </div>
