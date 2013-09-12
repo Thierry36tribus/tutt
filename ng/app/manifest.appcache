@@ -1,0 +1,21 @@
+CACHE MANIFEST
+      
+# 2013-09-12 12:45 v0.1
+
+CACHE:
+index.html
+css/app.css
+js/app.js
+js/controllers.js
+js/directives.js
+js/filters.js
+js/services.js
+partials/infos.html
+partials/projects.html
+lib/angular/angular.js
+lib/angular/angular-resource.js
+
+FALLBACK:
+
+NETWORK:
+*

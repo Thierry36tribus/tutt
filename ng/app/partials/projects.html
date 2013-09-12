@@ -1,0 +1,10 @@
+<div><input ng-model="query"></div>
+<div ng-show="startedProject != null && startedProject.label">You're working on {{startedProject.label}}<button ng-click="stop(startedProject)">Stop</button></div>
+
+<ul>
+    <li ng-repeat="project in projects | filter:query | orderBy:'lastUpdate':true">
+        <a ng-href="#/project/{{project.id}}">{{project.label}}</a><button ng-show="!isStarted(project)" ng-click="start(project)">Start</button>
+    </li>
+</ul>
+
+<a ng-href="#/project/0">Create</a>
