@@ -44,7 +44,7 @@ angular.module('tutt.controllers', []).
         }
         
     }])
-  /*  .controller('ProjectCtrl', ['$scope','$routeParams','Project', function($scope,$routeParams,Project) {
+   .controller('ProjectCtrl', ['$scope','$routeParams','$location','Project', function($scope,$routeParams,$location,Project) {
         $scope.project = Project.get({projectId: $routeParams.projectId}, null)
         
         $scope.update = function(project) {
@@ -53,7 +53,8 @@ angular.module('tutt.controllers', []).
         
         $scope.delete =function(project) {
             $scope.project.$delete({'projectId':project.id})
+             $location.path( "/" );
         }
         
-    }])*/
+    }])
     .controller('InfosCtrl', [function() { }]);

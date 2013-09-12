@@ -58,7 +58,9 @@ public class Application extends Controller {
 			}
 			startedProject = null;
 		} else {
-			postedProject.save();
+			final Project project = Project.findById(postedProject.id);
+			project.label = postedProject.label;
+			project.save();
 		}
 		ok();
 	}

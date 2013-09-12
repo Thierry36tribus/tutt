@@ -1,0 +1,7 @@
+<h1>{{project.label}}</h1>
+
+<form novalidate class="simple-form">
+    <label for="label">Nom du projet</label><input id="label" type="text" ng-model="project.label" /><br>
+    <button ng-click="delete(project)">Supprimer</button>
+    <button ng-click="update(project)">Enregistrer</button>
+</form>
