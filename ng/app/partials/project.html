@@ -1,16 +1,16 @@
 <h1>{{project.label}}</h1>
 
 <form novalidate class="simple-form">
-    <label for="label">Nom du projet</label><input id="label" type="text" ng-model="project.label" /><br>
-    <button ng-click="delete(project)">Supprimer</button>
-    <button ng-click="update(project)">Enregistrer</button>
+    <label for="label">Name: </label><input id="label" type="text" ng-model="project.label" /><br>
+    <button ng-click="delete(project)">Delete</button>
+    <button ng-click="update(project)">Save</button>
 </form>
 
 <div>
     <p>{{sum()}} seconds</p>
     <ul>
         <li ng-repeat="session in sessions | orderBy:'start':true" style="background-color:{{session.project.color}};height:{{height(session)}}px">
-            {{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'MM/dd HH:mm'}} = {{duration(session)}} sec
+            {{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'MM/dd HH:mm'}} = {{duration(session)}}
         </li>
     </ul>
 </div>

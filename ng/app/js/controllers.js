@@ -14,7 +14,16 @@ var calcDuration = function(session) {
         stop = session.start
         //stop = new Date().getTime()
     }
-    return (stop - session.start)/1000    
+    return (stop - session.start)/1000
+}
+
+var formatDuration = function(session) {
+    var stop = session.stop
+    if (!stop) {
+        stop = session.start
+        //stop = new Date().getTime()
+    }
+    return moment(session.start).from(moment(stop),true)
 }
 
 var calcHeight = function(session) {
@@ -65,7 +74,7 @@ angular.module('tutt.controllers', []).
 
         }            
         $scope.duration = function(session) {
-            return calcDuration(session)
+            return formatDuration(session)
         }        
         $scope.height = function(session) {
             return calcHeight(session)
@@ -86,7 +95,7 @@ angular.module('tutt.controllers', []).
         }
         
         $scope.duration = function(session) {
-            return calcDuration(session)
+            return formatDuration(session)
         }
         $scope.height = function(session) {
             return calcHeight(session)

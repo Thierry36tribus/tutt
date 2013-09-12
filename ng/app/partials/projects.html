@@ -1,5 +1,5 @@
 <div>
-    <div><input ng-model="query"></div>
+    <div><label for="search">Search or create: </label><input id="search" ng-model="query"></div>
     <div ng-show="startedProject != null && startedProject.label">You're working on {{startedProject.label}} since {{startedProject.lastUpdate | date:'MM/dd HH:mm'}}<button ng-click="stop(startedProject)">Stop</button></div>    
     <ul>
         <li ng-repeat="project in projects | filter:query | orderBy:'lastUpdate':true">
@@ -11,7 +11,7 @@
 <div>
     <ul>
         <li ng-repeat="session in sessions | orderBy:'start':true" style="background-color:{{session.project.color}};height:{{height(session)}}px">
-            {{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'MM/dd HH:mm'}} = {{duration(session)}} sec on {{session.project.label}}
+            {{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'MM/dd HH:mm'}} = {{duration(session)}} on {{session.project.label}}
         </li>
     </ul>
 </div>
