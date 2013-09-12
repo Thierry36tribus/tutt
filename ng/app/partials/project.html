@@ -5,3 +5,11 @@
     <button ng-click="delete(project)">Supprimer</button>
     <button ng-click="update(project)">Enregistrer</button>
 </form>
+
+<div>
+    <ul>
+        <li ng-repeat="session in sessions | orderBy:'start':true">
+            {{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'MM/dd HH:mm'}}
+        </li>
+    </ul>
+</div>

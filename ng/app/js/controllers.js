@@ -46,8 +46,9 @@ angular.module('tutt.controllers', []).
         }
         
     }])
-   .controller('ProjectCtrl', ['$scope','$routeParams','$location','Project', function($scope,$routeParams,$location,Project) {
+   .controller('ProjectCtrl', ['$scope','$routeParams','$location','Project','Sessions', function($scope,$routeParams,$location,Project,Sessions) {
         $scope.project = Project.get({projectId: $routeParams.projectId}, null)
+        $scope.sessions = Sessions.query({projectId: $routeParams.projectId})
         
         $scope.update = function(project) {
             $scope.project.$save()

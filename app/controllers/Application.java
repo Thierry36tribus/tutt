@@ -70,8 +70,12 @@ public class Application extends Controller {
 		ok();
 	}
 
-	public static void allSessions() {
-		renderJSON(gson().toJson(WorkingSession.all().fetch()));
+	public static void allSessions(final long projectId) {
+		if (projectId == 0) {
+			renderJSON(gson().toJson(WorkingSession.all().fetch()));
+		} else {
+			renderJSON(gson().toJson(WorkingSession.findByProject(projectId)));
+		}
 	}
 
 	private static Gson gson() {

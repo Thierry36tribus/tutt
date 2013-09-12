@@ -14,7 +14,7 @@ angular.module('tutt.services', ['ngResource'])
     })
     .factory('Sessions',function($resource){
         return $resource('/sessions', {}, {
-                query: {method:'GET', params:{}, isArray:true}
+                query: {method:'GET', params:{projectId:''}, isArray:true}
         })
     })
 

@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -43,4 +44,7 @@ public class WorkingSession extends Model {
 		return find("byStopIsNull").first();
 	}
 
+	public static List<WorkingSession> findByProject(final long projectId) {
+		return find("project.id =?", projectId).fetch();
+	}
 }
