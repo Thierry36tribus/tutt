@@ -3,14 +3,14 @@
     <div ng-show="startedProject != null && startedProject.label">You're working on {{startedProject.label}} since {{startedProject.lastUpdate | date:'MM/dd HH:mm'}}<button ng-click="stop(startedProject)">Stop</button></div>    
     <ul>
         <li ng-repeat="project in projects | filter:query | orderBy:'lastUpdate':true">
-            <a ng-href="#/project/{{project.id}}">{{project.label}}</a><button ng-show="!isStarted(project)" ng-click="start(project)">Start</button>
+            <a ng-href="#/project/{{project.id}}">{{project.label}}</a><button style="background-color:{{project.color}}" ng-show="!isStarted(project)" ng-click="start(project)">Start</button>
         </li>
     </ul>
     <button ng-show="query.length > 0" ng-click="create(query)">Create {{query}}</button>
 </div>
 <div>
     <ul>
-        <li ng-repeat="session in sessions | orderBy:'start':true">
+        <li ng-repeat="session in sessions | orderBy:'start':true" style="background-color:{{session.project.color}};height:{{height(session)}}px">
             {{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'MM/dd HH:mm'}} = {{duration(session)}} sec on {{session.project.label}}
         </li>
     </ul>

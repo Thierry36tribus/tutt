@@ -17,6 +17,19 @@ var calcDuration = function(session) {
     return (stop - session.start)/1000    
 }
 
+var calcHeight = function(session) {
+    var minutes = calcDuration(session) / 60
+    var h
+    if (minutes < 60) {
+        h = 20
+    } else if (minutes > 8*60) {
+        h = 300
+    } else {
+        h = 20 * minutes / 60
+    }
+    return h
+}
+
 angular.module('tutt.controllers', []).
     controller('ProjectsCtrl', ['$scope','$http','Project','Sessions',function($scope,$http,Project,Sessions) {
         $scope.projects = Project.query()
@@ -50,10 +63,14 @@ angular.module('tutt.controllers', []).
                 $scope.projects = Project.query()    
             });
 
-        }
+        }            
         $scope.duration = function(session) {
             return calcDuration(session)
         }        
+        $scope.height = function(session) {
+            return calcHeight(session)
+        }        
+
     }])
    .controller('ProjectCtrl', ['$scope','$routeParams','$location','Project','Sessions', function($scope,$routeParams,$location,Project,Sessions) {
         $scope.project = Project.get({projectId: $routeParams.projectId}, null)
@@ -70,6 +87,14 @@ angular.module('tutt.controllers', []).
         
         $scope.duration = function(session) {
             return calcDuration(session)
+        }
+        $scope.height = function(session) {
+            return calcHeight(session)
+        }
+        $scope.sum = function() {
+            return $scope.sessions.reduce(function(sum, session){
+                return calcDuration(session) + sum;
+            },0)
         }
         
     }])

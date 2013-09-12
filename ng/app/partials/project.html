@@ -7,8 +7,9 @@
 </form>
 
 <div>
+    <p>{{sum()}} seconds</p>
     <ul>
-        <li ng-repeat="session in sessions | orderBy:'start':true">
+        <li ng-repeat="session in sessions | orderBy:'start':true" style="background-color:{{session.project.color}};height:{{height(session)}}px">
             {{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'MM/dd HH:mm'}} = {{duration(session)}} sec
         </li>
     </ul>
