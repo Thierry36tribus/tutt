@@ -23,6 +23,8 @@ angular.module('tutt.controllers', []).
             // pour refresh de l'ordre TODO faire mieux que refaire une requête
             $scope.projects = Project.query()
             $scope.sessions = Sessions.query()
+            $scope.startedProject = Project.started()
+
         }
         $scope.stop = function(project) {
             if ($scope.startedProject) {

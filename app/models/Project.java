@@ -32,6 +32,7 @@ public class Project extends Model {
 	public void start() {
 		Logger.debug("start %s", this);
 		lastUpdate = new Date();
+		save();
 		final WorkingSession session = WorkingSession.findNonStoppedSession();
 		if (session != null) {
 			session.project.stop();
@@ -49,6 +50,7 @@ public class Project extends Model {
 		// -1 sec pour pas avoir la même date que le projet qui starte en même
 		// temps
 		lastUpdate = new Date(System.currentTimeMillis() - 1000);
+		save();
 	}
 
 }

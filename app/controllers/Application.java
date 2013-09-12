@@ -1,11 +1,16 @@
 package controllers;
 
+import java.util.Date;
+
+import models.DateGsonDeserializer;
+import models.DateGsonSerializer;
 import models.Project;
 import models.WorkingSession;
 import play.Logger;
 import play.mvc.Controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class Application extends Controller {
 
@@ -15,14 +20,14 @@ public class Application extends Controller {
 
 	public static void all(final boolean started) {
 		if (started) {
-			renderJSON(WorkingSession.findStartedProject());
+			renderJSON(gson().toJson((WorkingSession.findStartedProject())));
 		} else {
-			renderJSON(Project.all().fetch());
+			renderJSON(gson().toJson(Project.all().fetch()));
 		}
 	}
 
 	public static void find(final long projectId) {
-		renderJSON(Project.findById(projectId));
+		renderJSON(gson().toJson(Project.findById(projectId)));
 	}
 
 	public static void delete(final long projectId) {
@@ -43,7 +48,7 @@ public class Application extends Controller {
 	}
 
 	public static void post(final String body, final boolean start, final boolean stop) {
-		final Project postedProject = new Gson().fromJson(body, Project.class);
+		final Project postedProject = gson().fromJson(body, Project.class);
 		Project startedProject = WorkingSession.findStartedProject();
 		if (start) {
 			Logger.debug("start, body = %s, project =%s", body, postedProject);
@@ -66,6 +71,13 @@ public class Application extends Controller {
 	}
 
 	public static void allSessions() {
-		renderJSON(WorkingSession.all().fetch());
+		renderJSON(gson().toJson(WorkingSession.all().fetch()));
+	}
+
+	private static Gson gson() {
+		final GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(Date.class, new DateGsonSerializer());
+		gsonBuilder.registerTypeAdapter(Date.class, new DateGsonDeserializer());
+		return gsonBuilder.create();
 	}
 }

@@ -1,6 +1,6 @@
 <div>
     <div><input ng-model="query"></div>
-    <div ng-show="startedProject != null && startedProject.label">You're working on {{startedProject.label}} since {{startedProject.lastUpdate}}<button ng-click="stop(startedProject)">Stop</button></div>    
+    <div ng-show="startedProject != null && startedProject.label">You're working on {{startedProject.label}} since {{startedProject.lastUpdate | date:'MM/dd HH:mm'}}<button ng-click="stop(startedProject)">Stop</button></div>    
     <ul>
         <li ng-repeat="project in projects | filter:query | orderBy:'lastUpdate':true">
             <a ng-href="#/project/{{project.id}}">{{project.label}}</a><button ng-show="!isStarted(project)" ng-click="start(project)">Start</button>
@@ -11,7 +11,7 @@
 <div>
     <ul>
         <li ng-repeat="session in sessions | orderBy:'start':true">
-            {{session.start}} -> {{session.stop}} : {{session.project.label}}
+            {{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'MM/dd HH:mm'}} : {{session.project.label}}
         </li>
     </ul>
 </div>
