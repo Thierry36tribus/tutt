@@ -16,7 +16,7 @@ window.addEventListener('load', function(e) {
 }, false);
 
 // Declare app level module which depends on filters, and services
-angular.module('tutt', ['tutt.filters', 'tutt.services', 'tutt.directives', 'tutt.controllers']).
+angular.module('tutt', ['tutt.filters', 'tutt.services', 'tutt.directives', 'tutt.controllers','timer']).
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/projects', {templateUrl: 'partials/projects.html', controller: 'ProjectsCtrl'})
     $routeProvider.when('/project/:projectId', {templateUrl: 'partials/project.html', controller: 'ProjectCtrl'})

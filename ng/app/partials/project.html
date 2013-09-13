@@ -1,11 +1,14 @@
-<h1>{{project.label}}</h1>
-
 <form novalidate class="simple-form">
     <label for="label">Name: </label><input id="label" type="text" ng-model="project.label" /><br>
     <button ng-click="delete(project)">Delete</button>
     <button ng-click="update(project)">Save</button>
 </form>
-
+<h1>{{project.label}}</h1>
+<button ng-show="!isStarted()" ng-click="start()">Start</button>
+<div ng-show="isStarted()">
+    You're working on {{project.label}} since {{project.lastUpdate | date:'MM/dd HH:mm'}}
+    <button ng-click="stop()">Stop</button>
+</div>
 <div>
     <p>{{sum()}} seconds</p>
     <ul>

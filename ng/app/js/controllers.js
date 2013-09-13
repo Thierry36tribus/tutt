@@ -44,8 +44,7 @@ angular.module('tutt.controllers', []).
         $scope.projects = Project.query()
         $scope.sessions = Sessions.query()
 
-        $scope.startedProject = Project.started()
-            
+        $scope.startedProject = Project.started()        
         $scope.start = function(project) {
             $scope.startedProject = project
             $scope.startedProject.$start()
@@ -80,13 +79,6 @@ angular.module('tutt.controllers', []).
             return calcHeight(session)
         }        
         $scope.exists = function(label) {
-/*            for (var i =0; i < $scope.projects.length; i++) {
-                if ($scope.projects[i].label.trim().toLowerCase() == label.trim().toLowerCase()) {
-                    console.log('found!')
-                    return true
-                }
-            })
-            return false*/
             return $scope.projects.some(function(project) {
                 return project.label.trim().toLowerCase() == label.trim().toLowerCase()  
             })
@@ -96,6 +88,27 @@ angular.module('tutt.controllers', []).
    .controller('ProjectCtrl', ['$scope','$routeParams','$location','Project','Sessions', function($scope,$routeParams,$location,Project,Sessions) {
         $scope.project = Project.get({projectId: $routeParams.projectId}, null)
         $scope.sessions = Sessions.query({projectId: $routeParams.projectId})
+         
+        $scope.startedProject = Project.started()
+
+        $scope.isStarted = function() {
+            return $scope.startedProject && $scope.startedProject.id && $scope.project.id == $scope.startedProject.id
+        }    
+       
+        $scope.start = function(){
+            $scope.project.$start()
+            $scope.startedProject = $scope.project
+             // pour refresh TODO faire mieux que refaire une requête
+            $scope.project = Project.get({projectId: $routeParams.projectId}, null)
+            $scope.sessions = Sessions.query({projectId: $routeParams.projectId})
+        }
+        $scope.stop = function(){
+            $scope.project.$stop()
+            $scope.startedProject = null
+             // pour refresh TODO faire mieux que refaire une requête
+            $scope.project = Project.get({projectId: $routeParams.projectId}, null)
+            $scope.sessions = Sessions.query({projectId: $routeParams.projectId})
+        }
         
         $scope.update = function(project) {
             $scope.project.$save()
