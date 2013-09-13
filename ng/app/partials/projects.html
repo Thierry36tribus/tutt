@@ -1,12 +1,12 @@
 <div>
-    <div><label for="search">Search or create: </label><input id="search" ng-model="query"></div>
+    <div><label for="search">Search or create: </label><input id="search" ng-model="searched" type="search"></div>
     <div ng-show="startedProject != null && startedProject.label">You're working on {{startedProject.label}} since {{startedProject.lastUpdate | date:'MM/dd HH:mm'}}<button ng-click="stop(startedProject)">Stop</button></div>    
     <ul>
-        <li ng-repeat="project in projects | filter:query | orderBy:'lastUpdate':true">
+        <li ng-repeat="project in projects | filter:searched | orderBy:'lastUpdate':true">
             <a ng-href="#/project/{{project.id}}">{{project.label}}</a><button style="background-color:{{project.color}}" ng-show="!isStarted(project)" ng-click="start(project)">Start</button>
         </li>
     </ul>
-    <button ng-show="query.length > 0" ng-click="create(query)">Create {{query}}</button>
+    <button ng-show="searched.length > 0 && !exists(searched)" ng-click="create(searched)">Create {{searched}}</button>
 </div>
 <div>
     <ul>

@@ -79,6 +79,18 @@ angular.module('tutt.controllers', []).
         $scope.height = function(session) {
             return calcHeight(session)
         }        
+        $scope.exists = function(label) {
+/*            for (var i =0; i < $scope.projects.length; i++) {
+                if ($scope.projects[i].label.trim().toLowerCase() == label.trim().toLowerCase()) {
+                    console.log('found!')
+                    return true
+                }
+            })
+            return false*/
+            return $scope.projects.some(function(project) {
+                return project.label.trim().toLowerCase() == label.trim().toLowerCase()  
+            })
+        }
 
     }])
    .controller('ProjectCtrl', ['$scope','$routeParams','$location','Project','Sessions', function($scope,$routeParams,$location,Project,Sessions) {
