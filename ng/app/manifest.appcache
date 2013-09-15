@@ -1,6 +1,6 @@
 CACHE MANIFEST
       
-# 2013-09-13 15:49 v0.1
+# 2013-09-15 10:20 v0.1
 
 CACHE:
 index.html
@@ -16,6 +16,8 @@ libs/angular/angular.js
 libs/angular/angular-resource.js
 libs/timer.js
 libs/moment.min.js
+libs/bootstrap/js/bootstrap.min.js
+libs/bootstrap/css/bootstrap.min.css
 
 FALLBACK:
 

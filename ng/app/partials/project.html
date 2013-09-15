@@ -10,7 +10,7 @@
     <button ng-click="stop()">Stop</button>
 </div>
 <div>
-    <p>{{sum()}} seconds</p>
+    <p>{{sum() / 3600  | number:1 }} hours</p>
     <ul>
         <li ng-repeat="session in sessions | orderBy:'start':true" style="background-color:{{session.project.color}};height:{{height(session)}}px">
             {{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'MM/dd HH:mm'}} = {{duration(session)}}

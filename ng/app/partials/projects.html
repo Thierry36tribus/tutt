@@ -2,7 +2,6 @@
     <div><label for="search">Search or create: </label><input id="search" ng-model="searched" type="search"></div>
     <div ng-show="startedProject != null && startedProject.label">
         You're working on {{startedProject.label}} since {{startedProject.lastUpdate | date:'MM/dd HH:mm'}}
-        <p>{{startedProject.lastUpdate}}</p>
         <timer start-time="startedProject.lastUpdate">{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.</timer>
         <button ng-click="stop(startedProject)">Stop</button>
     </div>    
