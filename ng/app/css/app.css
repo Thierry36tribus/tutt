@@ -16,7 +16,6 @@ h1 {
 
 .session {
     overflow: hidden;
-    text-overflow:ellipsis;    
 }
 
 /* Page projets ------------------------------ */
@@ -55,9 +54,14 @@ h1 {
 .project-label {
     display:inline-block;
     margin-right: 50px;
+    font-size: 1.5em;
+    font-weight:bold;
 }
 .sum {
     font-size:1.5em;
     font-weight:bold;
 }
 
+.project-sessions {
+    max-width: 500px;
+}

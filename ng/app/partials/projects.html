@@ -15,8 +15,8 @@
     <div class="col-sm-6 col-xs-2">
         <p class="hidden-xs">Your activity:</p>
         <ul class="list-unstyled">
-            <li ng-repeat="session in sessions | orderBy:'start':true" style="background-color:{{session.project.color}};height:{{height(session)}}px" class="session">
-                <span class="hidden-xs">{{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'MM/dd HH:mm'}} - {{duration(session)}} on {{session.project.label}}</span>
+            <li ng-repeat="session in sessions | orderBy:'start':true" style="background-color:{{session.project.color}};line-height:{{height(session)}}px;height:{{height(session)}}px" class="session">
+                <span class="hidden-xs">{{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'HH:mm'}} - {{duration(session)}} on {{session.project.label}}</span>
             </li>
         </ul>
     </div>

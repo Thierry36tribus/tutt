@@ -14,9 +14,14 @@
 
 <div>
     <p>From the beginning: <span class="sum">{{sum() / 3600  | number:1 }} hours</span></p>
-    <ul>
-        <li ng-repeat="session in sessions | orderBy:'start':true" style="background-color:{{session.project.color}};height:{{height(session)}}px">
-            {{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'MM/dd HH:mm'}} = {{duration(session)}}
+
+    <ul class="list-unstyled project-sessions">
+        <li ng-repeat="session in sessions | orderBy:'start':true" style="line-height:{{height(session)}}px;height:{{height(session)}}px" class="session row">
+            <span style="background-color:{{session.project.color}}" class="col-xs-9">{{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'HH:mm'}} - {{duration(session)}}</span>
+            <span class="btn-group col-xs-3" style="margin-top:{{(height(session)/2) - 11}}px">
+                <button class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"/></button>
+                <button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"/></button>
+            </span>
         </li>
     </ul>
 </div>
