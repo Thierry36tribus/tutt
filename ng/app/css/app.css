@@ -10,6 +10,17 @@ input[type="search"]::-webkit-search-cancel-button {
  -webkit-appearance: searchfield-cancel-button;
 }
 
+h1 {
+    margin-top: 10px;
+}
+
+.session {
+    overflow: hidden;
+    text-overflow:ellipsis;    
+}
+
+/* Page projets ------------------------------ */
+
 .search {
     margin:10px;
 }
@@ -39,8 +50,14 @@ input[type="search"]::-webkit-search-cancel-button {
     height:56px;
 }
 
-.session {
-    overflow: hidden;
-    text-overflow:ellipsis;    
+/* Page projet ------------------------------ */
+
+.project-label {
+    display:inline-block;
+    margin-right: 50px;
+}
+.sum {
+    font-size:1.5em;
+    font-weight:bold;
 }
 

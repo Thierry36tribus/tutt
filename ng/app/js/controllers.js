@@ -140,6 +140,9 @@ angular.module('tutt.controllers', []).
                 return calcDuration(session) + sum;
             },0)
         }
+        $scope.since = function() {
+            return moment($scope.project.lastUpdate).format('dddd H:mm')
+        }
         
     }])
     .controller('InfosCtrl', [function() { }]);

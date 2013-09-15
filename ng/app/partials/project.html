@@ -1,16 +1,19 @@
-<form novalidate class="simple-form">
-    <label for="label">Name: </label><input id="label" type="text" ng-model="project.label" /><br>
-    <button ng-click="delete(project)">Delete</button>
-    <button ng-click="update(project)">Save</button>
-</form>
-<h1>{{project.label}}</h1>
-<button ng-show="!isStarted()" ng-click="start()">Start</button>
-<div ng-show="isStarted()">
-    You're working on {{project.label}} since {{project.lastUpdate | date:'MM/dd HH:mm'}}
-    <button ng-click="stop()">Stop</button>
+<h1 class="project-label">{{project.label}}</h1>
+<div class="btn-group">
+    <button class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"/></button>
+    <button class="btn btn-danger btn-sm" ng-click="delete(project)"><span class="glyphicon glyphicon-trash"/></button>
 </div>
+
+<div ng-show="!isStarted()">
+    <button ng-click="start()" class="btn btn-lg btn-info"><span class="glyphicon glyphicon-play"/></button>
+</div>    
+<div ng-show="isStarted()">
+    You're working on {{project.label}} since {{since()}}
+    <button ng-click="stop()" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"/></button>
+</div>
+
 <div>
-    <p>{{sum() / 3600  | number:1 }} hours</p>
+    <p>From the beginning: <span class="sum">{{sum() / 3600  | number:1 }} hours</span></p>
     <ul>
         <li ng-repeat="session in sessions | orderBy:'start':true" style="background-color:{{session.project.color}};height:{{height(session)}}px">
             {{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'MM/dd HH:mm'}} = {{duration(session)}}

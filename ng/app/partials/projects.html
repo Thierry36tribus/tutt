@@ -1,5 +1,9 @@
 <div class="row">
     <div class="col-sm-6 col-xs-10">
+        <div class ="hidden-xs">
+            <h1>Tutt: The ultimate time tracker</h1>
+            <p>It'll help you to be focused, and maybe you'll never use a time tracker at all...</p>
+        </div>        
         <div class="search"><label for="search">Search or create: </label><input id="search" ng-model="searched" type="search" role="search"></div>
         <ul class="list-unstyled projects">
             <li ng-repeat="project in projects | filter:searched | orderBy:'lastUpdate':true" class="project row" style="background-color:{{project.color}}">
@@ -9,6 +13,7 @@
         <button ng-show="searched.length > 0 && !exists(searched)" ng-click="create(searched)">Create {{searched}}</button>
     </div>
     <div class="col-sm-6 col-xs-2">
+        <p class="hidden-xs">Your activity:</p>
         <ul class="list-unstyled">
             <li ng-repeat="session in sessions | orderBy:'start':true" style="background-color:{{session.project.color}};height:{{height(session)}}px" class="session">
                 <span class="hidden-xs">{{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'MM/dd HH:mm'}} - {{duration(session)}} on {{session.project.label}}</span>
