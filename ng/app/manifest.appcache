@@ -1,17 +1,21 @@
 CACHE MANIFEST
       
-# 2013-09-15 10:20 v0.1
+# 2013-09-15 12:43 v0.1
 
 CACHE:
 index.html
 css/app.css
+
 js/app.js
 js/controllers.js
 js/directives.js
 js/filters.js
 js/services.js
+
 partials/infos.html
 partials/projects.html
+
+libs/jquery-2.0.3.min.js
 libs/angular/angular.js
 libs/angular/angular-resource.js
 libs/timer.js

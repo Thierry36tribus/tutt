@@ -8,14 +8,32 @@
     <link rel="stylesheet" href="css/app.css"/>
 </head>
 <body>
-    <ul class="menu">
-        <li><a href="#/projects">Projets</a></li>
-        <li><a href="#/infos">Infos</a></li>
-    </ul>
-    <h1>Tutt: The ultimate time tracker</h1>
-    <p>It'll help you to be focused, and maybe you'll never use a time tracker at all...</p>
-    <div ng-view></div>
-
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-content">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand active" href="#/projects">Tutt</a>
+        </div>
+        <div class="collapse navbar-collapse navbar-content">
+            <ul class="nav navbar-nav">
+              <li><a href="#/settings">Settings</a></li>
+              <li><a href="#/infos">About</a></li>
+          </ul>
+        </div>
+    </nav>    
+    
+    <div class="container">
+        <div class ="hidden-xs">
+            <h1>Tutt: The ultimate time tracker</h1>
+            <p>It'll help you to be focused, and maybe you'll never use a time tracker at all...</p>
+        </div>        
+        <div ng-view></div>
+    </div>
+    <script src="libs/jquery-2.0.3.min.js"></script> 
     <script src="libs/angular/angular.js"></script>
     <script src="libs/angular/angular-resource.js"></script>
     <script src="libs/timer.js"></script>
