@@ -1,4 +1,46 @@
-/* cf http://angular-ui.github.io/bootstrap/ */
-.nav, .pagination, .carousel a { cursor: pointer; }
 
+input[type="search"] {
+ -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+         box-sizing: content-box;
+ -webkit-appearance: searchfield;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+ -webkit-appearance: searchfield-cancel-button;
+}
+
+.search {
+    margin:10px;
+}
+
+.search label {
+    margin-right:10px;
+}
+
+.projects a:link, .projects a:visited , .projects a:hover, .projects a:active {
+    color: black;
+}
+
+.project {
+    height:60px;
+    line-height:60px;
+}
+
+.project a {
+    display: inline-block;
+    height:60px;
+    line-height:60px;
+    overflow: hidden;
+}
+
+.project button {
+    margin:2px 0 2px 0;
+    height:56px;
+}
+
+.session {
+    overflow: hidden;
+    text-overflow:ellipsis;    
+}
 

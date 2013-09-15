@@ -44,6 +44,14 @@ angular.module('tutt.controllers', []).
         $scope.projects = Project.query()
         $scope.sessions = Sessions.query()
 
+        $scope.label = function(project) {
+            if ($scope.isStarted(project)) {
+                return project.label + " since " + moment(project.lastUpdate).format('dddd H:mm')
+            } else {
+                return project.label
+            }
+        }
+        
         $scope.startedProject = Project.started()        
         $scope.start = function(project) {
             $scope.startedProject = project
