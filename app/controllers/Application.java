@@ -70,6 +70,15 @@ public class Application extends Controller {
 		ok();
 	}
 
+	public static void postSession(final String body) {
+		final WorkingSession postedSession = gson().fromJson(body, WorkingSession.class);
+		final WorkingSession session = WorkingSession.findById(postedSession.id);
+		session.start = postedSession.start;
+		session.stop = postedSession.stop;
+		session.save();
+		ok();
+	}
+
 	public static void allSessions(final long projectId) {
 		if (projectId == 0) {
 			renderJSON(gson().toJson(WorkingSession.all().fetch()));

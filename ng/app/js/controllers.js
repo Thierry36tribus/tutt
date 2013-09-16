@@ -173,9 +173,23 @@ angular.module('tutt.controllers', []).
             return session.modifying
         }
         $scope.openSessionModifying = function(session) {
+            if (!session.modifying) {
+                if (!session.stop) {
+                    alert("You can't modify a working session in progress.")
+                    return
+                }
+                
+                // pour pouvoir restaurer en cas de cancel  
+                session.originalStart = session.start
+                session.originalStop = session.stop
+            }
             session.modifying = !session.modifying
         }
         $scope.closeSessionModifying = function(session) {
+            if (session.originalStart && session.originalStop) {
+                session.start = session.originalStart
+                session.stop = session.originalStop
+            }
             session.modifying = false
         }    
         

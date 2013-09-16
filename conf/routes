@@ -9,6 +9,7 @@ DELETE	/projects/{projectId}		Application.delete
 
 
 GET		/sessions					Application.allSessions
+POST 	/sessions					Application.postSession
 DELETE	/sessions/{sessionId}		Application.deleteSession
 
 # Ignore favicon requests
