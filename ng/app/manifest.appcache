@@ -1,6 +1,6 @@
 CACHE MANIFEST
       
-# 2013-09-16 14:09 v0.1
+# 2013-09-16 15:53 v0.1
 
 CACHE:
 index.html
@@ -22,6 +22,9 @@ libs/timer.js
 libs/moment.min.js
 libs/bootstrap/js/bootstrap.min.js
 libs/bootstrap/css/bootstrap.min.css
+libs/ui-bootstrap-0.6.0.min.js
+libs/datetimepicker/datetimepicker.js
+libs/datetimepicker/datetimepicker.css
 
 FALLBACK:
 

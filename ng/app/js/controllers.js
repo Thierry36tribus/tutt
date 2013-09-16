@@ -130,8 +130,11 @@ angular.module('tutt.controllers', []).
         }
         
         $scope.deleteProject =function() {
-            $scope.project.$delete({'projectId':$scope.project.id})
-            $location.path( "/" );
+            if (confirm("Remove this project?")) {
+                $scope.project.$delete({'projectId':$scope.project.id},function(){
+                    $location.path( "/" )
+                })
+            }
         }
         
         $scope.duration = function(session) {
@@ -153,10 +156,17 @@ angular.module('tutt.controllers', []).
             return $scope.labelModifying;
         }
         $scope.openLabelModifying = function() {
+            if (!$scope.labelModifying) {
+                // pour pouvoir le restaurer en cas de cancel
+                $scope.originalLabel = $scope.project.label                
+            }
             $scope.labelModifying = !$scope.labelModifying;
         }
         $scope.closeLabelModifying = function() {
-            $scope.labelModifying = false
+            if ($scope.originalLabel) {
+                $scope.project.label = $scope.originalLabel
+            }
+             $scope.labelModifying = false
         }
         
         $scope.isSessionModifying = function(session) {
@@ -170,17 +180,18 @@ angular.module('tutt.controllers', []).
         }    
         
         $scope.updateSession = function(session) {
-            session.$update()
+            session.$save()
+            session.modifying = false
         }
         $scope.deleteSession = function(session) {
-            session.$delete({'sessionId':session.id},function() {
-                var index = $scope.sessions.indexOf(session)
-                if (index >=0){
-                    $scope.sessions.splice(index,1)
-                }
-            })
-            
-            
+            if (confirm("Remove this working session?")) {
+                session.$delete({'sessionId':session.id},function() {
+                    var index = $scope.sessions.indexOf(session)
+                    if (index >=0){
+                        $scope.sessions.splice(index,1)
+                    }
+                })
+            }            
         }
         
     }])

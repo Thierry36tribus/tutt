@@ -29,7 +29,19 @@
                 <span class="panel-title">{{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'HH:mm'}} - {{duration(session)}}</span>
             </div>
             <div ng-show="isSessionModifying(session)" class="panel-body">
-                TODO datesPicker
+                    
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#" href="#">
+                        <div class="input-append">
+                            <input type="text" class="input-large" data-ng-model="session.start">
+                            <span class="add-on"><i class="icon-calendar"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker data-ng-model="session.start" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }"/>
+                    </ul>
+                </div>
+                
                 <button class="btn btn-success" ng-click="updateSession(session)"><span class="glyphicon glyphicon-chevron-down"/></button>
                 <button class="btn btn-warning" ng-click="closeSessionModifying(session)"><span class="glyphicon glyphicon-remove"/></button>
                 <button class="btn btn-danger" ng-click="deleteSession(session)"><span class="glyphicon glyphicon-trash"/></button>

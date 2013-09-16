@@ -15,7 +15,10 @@ window.addEventListener('load', function(e) {
   }, false);
 }, false);
 
-angular.module('tutt', ['tutt.filters', 'tutt.services', 'tutt.directives', 'tutt.controllers','timer']).
+
+// ui.bootstrap n'est pas utilisé
+
+angular.module('tutt', ['tutt.filters', 'tutt.services', 'tutt.directives', 'tutt.controllers','timer','ui.bootstrap','ui.bootstrap.datetimepicker']).
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/projects', {templateUrl: 'partials/projects.html', controller: 'ProjectsCtrl'})
     $routeProvider.when('/project/:projectId', {templateUrl: 'partials/project.html', controller: 'ProjectCtrl'})
