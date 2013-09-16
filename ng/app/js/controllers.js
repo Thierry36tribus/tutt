@@ -98,6 +98,7 @@ angular.module('tutt.controllers', []).
    .controller('ProjectCtrl', ['$scope','$routeParams','$location','Project','Sessions', function($scope,$routeParams,$location,Project,Sessions) {
         $scope.project = Project.get({projectId: $routeParams.projectId}, null)
         $scope.sessions = Sessions.query({projectId: $routeParams.projectId})
+        $scope.labelModifying = false
          
         $scope.startedProject = Project.started()
 
@@ -122,6 +123,7 @@ angular.module('tutt.controllers', []).
         
         $scope.update = function(project) {
             $scope.project.$save()
+            $scope.labelModifying = false
         }
         
         $scope.delete =function(project) {
@@ -143,6 +145,17 @@ angular.module('tutt.controllers', []).
         $scope.since = function() {
             return moment($scope.project.lastUpdate).format('dddd H:mm')
         }
+        
+        $scope.isLabelModifying = function() {
+            return $scope.labelModifying;
+        }
+        $scope.openLabelModifying = function() {
+            $scope.labelModifying = !$scope.labelModifying;
+        }
+        $scope.closeLabelModifying = function() {
+            $scope.labelModifying = false
+        }
+        
         
     }])
     .controller('InfosCtrl', [function() { }]);

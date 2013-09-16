@@ -1,7 +1,15 @@
-<h1 class="project-label">{{project.label}}</h1>
-<div class="btn-group">
-    <button class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"/></button>
-    <button class="btn btn-danger btn-sm" ng-click="delete(project)"><span class="glyphicon glyphicon-trash"/></button>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="project-label panel-title">{{project.label}}</h1>
+    <button class="btn btn-warning" ng-click="openLabelModifying()"><span class="glyphicon glyphicon-pencil"/></button>
+  </div>
+  <div class="panel-body" ng-show="isLabelModifying()">
+        <input type="text" ng-model="project.label" class="label-input">
+        <button class="btn btn-success" ng-click="update(project)"><span class="glyphicon glyphicon-chevron-down"/></button>
+        <button class="btn btn-warning" ng-click="closeLabelModifying()"><span class="glyphicon glyphicon-remove"/></button>
+        <button class="btn btn-danger" ng-click="delete(project)"><span class="glyphicon glyphicon-trash"/></button>
+    </div>
 </div>
 
 <div ng-show="!isStarted()">
