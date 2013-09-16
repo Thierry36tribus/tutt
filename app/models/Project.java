@@ -1,12 +1,14 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 
 import play.Logger;
 import play.data.validation.MaxSize;
 import play.data.validation.Required;
+import play.db.jpa.JPABase;
 import play.db.jpa.Model;
 
 @Entity
@@ -33,6 +35,15 @@ public class Project extends Model {
 		this.label = label;
 		lastUpdate = new Date();
 		color = COLORS[(int) (System.currentTimeMillis() % COLORS.length)];
+	}
+
+	@Override
+	public <T extends JPABase> T delete() {
+		final List<WorkingSession> sessions = WorkingSession.findByProject(id);
+		for (final WorkingSession session : sessions) {
+			session.delete();
+		}
+		return super.delete();
 	}
 
 	@Override

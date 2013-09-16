@@ -32,7 +32,7 @@ public class Application extends Controller {
 
 	public static void delete(final long projectId) {
 		Logger.debug("delete(%s)", projectId);
-		Project.findById(projectId)._delete();
+		((Project) Project.findById(projectId)).delete();
 		ok();
 	}
 
