@@ -1,14 +1,14 @@
 
-<div class="panel panel-default">
-  <div class="panel-heading">
+<div class="panel panel-default project-header">
+  <div class="panel-heading" ng-click="openLabelModifying()">
     <h1 class="project-label panel-title">{{project.label}}</h1>
-    <button class="btn btn-warning" ng-click="openLabelModifying()"><span class="glyphicon glyphicon-pencil"/></button>
+<!--    <button class="btn btn-warning" ng-click="openLabelModifying()"><span class="glyphicon glyphicon-pencil"/></button> -->
   </div>
   <div class="panel-body" ng-show="isLabelModifying()">
         <input type="text" ng-model="project.label" class="label-input">
-        <button class="btn btn-success" ng-click="update(project)"><span class="glyphicon glyphicon-chevron-down"/></button>
+        <button class="btn btn-success" ng-click="updateProject()"><span class="glyphicon glyphicon-chevron-down"/></button>
         <button class="btn btn-warning" ng-click="closeLabelModifying()"><span class="glyphicon glyphicon-remove"/></button>
-        <button class="btn btn-danger" ng-click="delete(project)"><span class="glyphicon glyphicon-trash"/></button>
+        <button class="btn btn-danger" ng-click="deleteProject()"><span class="glyphicon glyphicon-trash"/></button>
     </div>
 </div>
 
@@ -24,12 +24,17 @@
     <p>From the beginning: <span class="sum">{{sum() / 3600  | number:1 }} hours</span></p>
 
     <ul class="list-unstyled project-sessions">
-        <li ng-repeat="session in sessions | orderBy:'start':true" style="line-height:{{height(session)}}px;height:{{height(session)}}px" class="session row">
-            <span style="background-color:{{session.project.color}}" class="col-xs-9">{{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'HH:mm'}} - {{duration(session)}}</span>
-            <span class="btn-group col-xs-3" style="margin-top:{{(height(session)/2) - 11}}px">
-                <button class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"/></button>
-                <button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"/></button>
-            </span>
+        <li ng-repeat="session in sessions | orderBy:'start':true" class="session panel panel-default">
+            <div class="panel-heading" style="line-height:{{height(session)}}px;height:{{height(session)}}px; background-color:{{session.project.color}}" ng-click="openSessionModifying(session)" >
+                <span class="panel-title">{{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'HH:mm'}} - {{duration(session)}}</span>
+            </div>
+            <div ng-show="isSessionModifying(session)" class="panel-body">
+                TODO datesPicker
+                <button class="btn btn-success" ng-click="updateSession(session)"><span class="glyphicon glyphicon-chevron-down"/></button>
+                <button class="btn btn-warning" ng-click="closeSessionModifying(session)"><span class="glyphicon glyphicon-remove"/></button>
+                <button class="btn btn-danger" ng-click="deleteSession(session)"><span class="glyphicon glyphicon-trash"/></button>
+            </div>
+                
         </li>
     </ul>
 </div>

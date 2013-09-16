@@ -78,6 +78,14 @@ public class Application extends Controller {
 		}
 	}
 
+	public static void deleteSession(final long sessionId) {
+		final WorkingSession session = WorkingSession.findById(sessionId);
+		if (session != null) {
+			session._delete();
+		}
+		ok();
+	}
+
 	private static Gson gson() {
 		final GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.registerTypeAdapter(Date.class, new DateGsonSerializer());

@@ -99,7 +99,10 @@ angular.module('tutt.controllers', []).
         $scope.project = Project.get({projectId: $routeParams.projectId}, null)
         $scope.sessions = Sessions.query({projectId: $routeParams.projectId})
         $scope.labelModifying = false
-         
+        $scope.sessions.forEach(function(session) {
+            session.modifying = false
+        })
+        
         $scope.startedProject = Project.started()
 
         $scope.isStarted = function() {
@@ -121,14 +124,14 @@ angular.module('tutt.controllers', []).
             $scope.sessions = Sessions.query({projectId: $routeParams.projectId})
         }
         
-        $scope.update = function(project) {
+        $scope.updateProject = function() {
             $scope.project.$save()
             $scope.labelModifying = false
         }
         
-        $scope.delete =function(project) {
-            $scope.project.$delete({'projectId':project.id})
-             $location.path( "/" );
+        $scope.deleteProject =function() {
+            $scope.project.$delete({'projectId':$scope.project.id})
+            $location.path( "/" );
         }
         
         $scope.duration = function(session) {
@@ -156,6 +159,29 @@ angular.module('tutt.controllers', []).
             $scope.labelModifying = false
         }
         
+        $scope.isSessionModifying = function(session) {
+            return session.modifying
+        }
+        $scope.openSessionModifying = function(session) {
+            session.modifying = !session.modifying
+        }
+        $scope.closeSessionModifying = function(session) {
+            session.modifying = false
+        }    
+        
+        $scope.updateSession = function(session) {
+            session.$update()
+        }
+        $scope.deleteSession = function(session) {
+            session.$delete({'sessionId':session.id},function() {
+                var index = $scope.sessions.indexOf(session)
+                if (index >=0){
+                    $scope.sessions.splice(index,1)
+                }
+            })
+            
+            
+        }
         
     }])
     .controller('InfosCtrl', [function() { }]);
