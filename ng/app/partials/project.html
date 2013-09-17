@@ -2,11 +2,11 @@
 <div class="panel panel-default project-header">
   <div class="panel-heading" ng-click="openLabelModifying()">
     <h1 class="project-label panel-title">{{project.label}}</h1>
-<!--    <button class="btn btn-warning" ng-click="openLabelModifying()"><span class="glyphicon glyphicon-pencil"/></button> -->
+    <span class="open-indicator glyphicon glyphicon-chevron-down"/>
   </div>
   <div class="panel-body" ng-show="isLabelModifying()">
-        <input type="text" ng-model="project.label" class="label-input form-control input-lg">
-        <div class="project-buttons">
+        <input type="text" ng-model="project.label" class="form-control input-lg">
+        <div class="buttons-bar">
             <button class="btn btn-success btn-lg" ng-click="updateProject()"><span class="glyphicon glyphicon-chevron-down"/></button>
             <button class="btn btn-warning btn-lg" ng-click="closeLabelModifying()"><span class="glyphicon glyphicon-remove"/></button>
             <button class="btn btn-danger btn-lg" ng-click="deleteProject()"><span class="glyphicon glyphicon-trash"/></button>
@@ -14,11 +14,11 @@
     </div>
 </div>
 
-<div ng-show="!isStarted()">
-    <button ng-click="start()" class="btn btn-lg btn-info"><span class="glyphicon glyphicon-play"/></button>
+<div ng-show="!isStarted()" class="start-stop">
+    <button ng-click="start()" class="btn btn-block btn-lg btn-info"><span class="glyphicon glyphicon-play"/></button>
 </div>    
-<div ng-show="isStarted()">
-    <button ng-click="stop()" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-stop"/></button>
+<div ng-show="isStarted()" class="start-stop">
+    <button ng-click="stop()" class="btn btn-block btn-lg btn-primary"><span class="glyphicon glyphicon-stop"/></button>
     You're working on {{project.label}} since {{since()}}
 </div>
 
@@ -28,22 +28,25 @@
         <ul class="list-unstyled project-sessions">
             <li ng-repeat="session in sessions | orderBy:'start':true" class="session panel panel-default">
                 <div class="panel-heading" style="line-height:{{height(session)}}px;height:{{height(session)}}px; background-color:{{session.project.color}}" ng-click="openSessionModifying(session)" >
-                    <span class="panel-title">{{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'HH:mm'}} - {{duration(session)}}</span>
+                    <span class="panel-title">{{session.start | date:'MM/dd HH:mm'}}-{{session.stop | date:'HH:mm'}} - {{duration(session)}}</span>
+                    <span class="open-indicator glyphicon glyphicon-chevron-down"/>
                 </div>
                 <div ng-show="isSessionModifying(session)" class="panel-body">
                         
                     <input type="number" ng-model="session.start">
                     <input type="number" ng-model="session.stop">
-                    
-                    <button class="btn btn-success" ng-click="updateSession(session)"><span class="glyphicon glyphicon-chevron-down"/></button>
-                    <button class="btn btn-warning" ng-click="closeSessionModifying(session)"><span class="glyphicon glyphicon-remove"/></button>
-                    <button class="btn btn-danger" ng-click="deleteSession(session)"><span class="glyphicon glyphicon-trash"/></button>
+                    <div class="buttons-bar">
+                        <button class="btn btn-success btn-lg" ng-click="updateSession(session)"><span class="glyphicon glyphicon-chevron-down"/></button>
+                        <button class="btn btn-warning btn-lg" ng-click="closeSessionModifying(session)"><span class="glyphicon glyphicon-remove"/></button>
+                        <button class="btn btn-danger btn-lg" ng-click="deleteSession(session)"><span class="glyphicon glyphicon-trash"/></button>
+                    </div>
                 </div>
                     
             </li>
         </ul>
     </div>
     <div class="col-sm-6 hidden-xs">
+        <br><br>
         <a href="/excel/{{project.id}}">Download an Excel file</a>
     </div>
 </div>
