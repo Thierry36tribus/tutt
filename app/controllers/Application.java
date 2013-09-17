@@ -1,12 +1,14 @@
 package controllers;
 
 import java.util.Date;
+import java.util.List;
 
 import models.DateGsonDeserializer;
 import models.DateGsonSerializer;
 import models.Project;
 import models.WorkingSession;
 import play.Logger;
+import play.modules.excel.RenderExcel;
 import play.mvc.Controller;
 
 import com.google.gson.Gson;
@@ -93,6 +95,13 @@ public class Application extends Controller {
 			session._delete();
 		}
 		ok();
+	}
+
+	public static void excel(final long projectId) {
+		final List<WorkingSession> sessions = WorkingSession.findByProject(projectId);
+		request.format = "xls";
+		renderArgs.put(RenderExcel.RA_FILENAME, "sessions_of_project_" + projectId);
+		render(sessions);
 	}
 
 	private static Gson gson() {

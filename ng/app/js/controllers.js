@@ -125,6 +125,7 @@ angular.module('tutt.controllers', []).
         }
         
         $scope.updateProject = function() {
+            // TODO vérifier unicité label
             $scope.project.$save()
             $scope.labelModifying = false
         }

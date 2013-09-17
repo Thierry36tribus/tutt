@@ -1,5 +1,7 @@
 # Routes
 
+GET		/excel/{projectId}			Application.excel
+
 POST	/create						Application.create
 
 GET		/projects					Application.all

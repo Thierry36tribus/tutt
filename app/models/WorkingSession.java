@@ -1,5 +1,6 @@
 package models;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import play.db.jpa.Model;
 
 @Entity
 public class WorkingSession extends Model {
+
+	private final static SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy");
 
 	@Required
 	public Date start;
@@ -46,5 +49,14 @@ public class WorkingSession extends Model {
 
 	public static List<WorkingSession> findByProject(final long projectId) {
 		return find("project.id =?", projectId).fetch();
+	}
+
+	public String getStartAsStr() {
+		return SDF.format(start);
+	}
+
+	public float getHours() {
+		final long to = (stop == null ? System.currentTimeMillis() : stop.getTime());
+		return (to - start.getTime()) / 3600000f;
 	}
 }
