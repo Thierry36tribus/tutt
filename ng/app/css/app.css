@@ -66,8 +66,11 @@ h1 {
 }
 
 .open-indicator {
-    float:right;
     margin-right:5px;
+}
+
+.project-header .open-indicator {
+    float:right;    
 }
 .buttons-bar button {
     margin-top:20px;
@@ -86,6 +89,19 @@ h1 {
 
 .project-sessions {
     max-width: 500px;
+}
+.project-sessions .panel-heading {
+    text-align:justify;
+}
+.project-sessions .panel-title {
+    display:inline-block;
+    text-align:left;
+}
+
+.project-sessions .panel-heading:after{
+   content: '';
+   display: inline-block;
+   width: 100%;
 }
 
 .session {
