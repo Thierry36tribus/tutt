@@ -24,12 +24,15 @@ h1 {
 
 /* Page projets ------------------------------ */
 
-.search {
-    margin:10px;
+.blabla {
+    text-align:center;
 }
 
-.search label {
-    margin-right:10px;
+.left-panel {
+    
+}
+.search {
+    margin:10px;
 }
 
 .projects a:link, .projects a:visited , .projects a:hover, .projects a:active {

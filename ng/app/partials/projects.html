@@ -1,22 +1,27 @@
 <div class="row">
-    <div class="col-sm-6 col-xs-10">
-        <div class ="hidden-xs">
+    <div class="left-panel col-sm-6 col-xs-10">
+        <div class ="blabla hidden-xs">
             <h1>Tutt: The ultimate time tracker</h1>
             <p>It'll help you to be focused, and maybe you'll never use a time tracker at all...</p>
         </div>        
-        <div class="search"><label for="search">Search or create: </label><input id="search" ng-model="searched" type="search" role="search"></div>
+        <div class="search">
+            <label for="search">Search or create: </label>
+            <input id="search" ng-model="searched" type="search" role="search" class="form-control" placeholder="Name of the project">
+        </div>
         <ul class="list-unstyled projects">
             <li ng-repeat="project in projects | filter:searched | orderBy:'lastUpdate':true" class="project row" style="background-color:{{project.color}}">
                 <a ng-href="#/project/{{project.id}}" class="col-xs-9 col-sm-10">{{label(project)}}</a><button ng-show="!isStarted(project)" ng-click="start(project)" class="btn btn-lg btn-info col-xs-3 col-sm-2"><span class="glyphicon glyphicon-play"></span></button><button ng-show="isStarted(project)" ng-click="stop(project)" class="btn btn-lg btn-primary col-xs-3 col-sm-2"><span class="glyphicon glyphicon-stop"></span></button>
             </li>
         </ul>
-        <button ng-show="searched.length > 0 && !exists(searched)" ng-click="create(searched)">Create {{searched}}</button>
+        <button ng-show="searched.length > 0 && !exists(searched)" ng-click="create(searched)" class="btn btn-primary">Create {{searched}}</button>
     </div>
     <div class="col-sm-6 col-xs-2">
         <p class="hidden-xs">Your activity:</p>
         <ul class="list-unstyled">
             <li ng-repeat="session in sessions | orderBy:'start':true" style="background-color:{{session.project.color}};line-height:{{height(session)}}px;height:{{height(session)}}px" class="session">
-                <span class="hidden-xs">{{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'HH:mm'}} - {{duration(session)}} on {{session.project.label}}</span>
+                <span class="hidden-xs">
+                    {{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'HH:mm'}} - {{duration(session)}} on {{session.project.label}}
+                </span>
             </li>
         </ul>
     </div>

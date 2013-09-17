@@ -29,12 +29,12 @@ var formatDuration = function(session) {
 var calcHeight = function(session) {
     var minutes = calcDuration(session) / 60
     var h
-    if (minutes < 60) {
+    if (minutes < 30) {
         h = 20
     } else if (minutes > 8*60) {
-        h = 300
+        h = 400
     } else {
-        h = 20 * minutes / 60
+        h = 40 * minutes / 60
     }
     return h
 }
