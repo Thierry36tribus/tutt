@@ -1,5 +1,10 @@
 # Routes
 
+*     /admin           module:crud
+*     /                module:secure
+
+GET		/							Application.index
+
 GET		/excel/{projectId}			Application.excel
 
 POST	/create						Application.create
@@ -21,7 +26,7 @@ GET     /favicon.ico                            404
 GET     /public/                                staticDir:public
 
 
-GET     /                           staticDir:ng/app
+GET     /app/                           staticDir:ng/app
 
 
 # Catch all

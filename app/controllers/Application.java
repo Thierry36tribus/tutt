@@ -10,14 +10,16 @@ import models.WorkingSession;
 import play.Logger;
 import play.modules.excel.RenderExcel;
 import play.mvc.Controller;
+import play.mvc.With;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+@With(Secure.class)
 public class Application extends Controller {
 
 	public static void index() {
-		render();
+		redirect("/app/");
 	}
 
 	public static void all(final boolean started) {

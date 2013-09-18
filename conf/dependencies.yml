@@ -2,4 +2,6 @@
 
 require:
     - play
+    - play -> secure
+    - play -> crud
     - play -> excel 1.2.3
