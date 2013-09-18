@@ -2,6 +2,7 @@ package models;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.ManyToOne;
 
 import play.data.validation.Required;
 import play.db.jpa.Model;
+import controllers.Security;
 
 @Entity
 public class WorkingSession extends Model {
@@ -33,6 +35,18 @@ public class WorkingSession extends Model {
 	@Override
 	public String toString() {
 		return "WorkingSession [start=" + start + ", stop=" + stop + ", project=" + project.id + "]";
+	}
+
+	public static List<WorkingSession> findAllowed() {
+		final TuttUser user = Security.connectedUser();
+		final List<WorkingSession> all = findAll();
+		final List<WorkingSession> allowed = new LinkedList<WorkingSession>();
+		for (final WorkingSession session : all) {
+			if (user.projects.contains(session.project)) {
+				allowed.add(session);
+			}
+		}
+		return allowed;
 	}
 
 	public static Project findStartedProject() {

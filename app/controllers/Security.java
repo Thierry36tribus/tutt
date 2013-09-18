@@ -12,4 +12,14 @@ public class Security extends Secure.Security {
 		return user != null;
 	}
 
+	public static TuttUser connectedUser() {
+		return TuttUser.find("byLogin", connected()).first();
+	}
+
+	static boolean check(final String profile) {
+		if ("administrator".equals(profile)) {
+			return (connectedUser().login.equals("lechaman"));
+		}
+		return true;
+	}
 }

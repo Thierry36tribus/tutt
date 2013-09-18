@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import play.data.validation.MaxSize;
 import play.data.validation.Required;
 import play.db.jpa.JPABase;
 import play.db.jpa.Model;
+import controllers.Security;
 
 @Entity
 public class Project extends Model {
@@ -43,6 +45,11 @@ public class Project extends Model {
 		for (final WorkingSession session : sessions) {
 			session.delete();
 		}
+		final List<TuttUser> users = TuttUser.findAll();
+		for (final TuttUser user : users) {
+			user.projects.remove(this);
+			user.save();
+		}
 		return super.delete();
 	}
 
@@ -75,4 +82,15 @@ public class Project extends Model {
 		save();
 	}
 
+	public static List<Project> findAllowed() {
+		final TuttUser user = Security.connectedUser();
+		final List<Project> all = findAll();
+		final List<Project> allowed = new LinkedList<Project>();
+		for (final Project project : all) {
+			if (user.projects.contains(project)) {
+				allowed.add(project);
+			}
+		}
+		return allowed;
+	}
 }

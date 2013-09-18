@@ -26,7 +26,7 @@ public class Application extends Controller {
 		if (started) {
 			renderJSON(gson().toJson((WorkingSession.findStartedProject())));
 		} else {
-			renderJSON(gson().toJson(Project.all().fetch()));
+			renderJSON(gson().toJson(Project.findAllowed()));
 		}
 	}
 
@@ -47,7 +47,7 @@ public class Application extends Controller {
 		}
 		// TODO check unicité label
 		final Project project = new Project(body);
-		project.save();
+		Security.connectedUser().add((Project) project.save());
 		ok();
 	}
 
@@ -85,7 +85,7 @@ public class Application extends Controller {
 
 	public static void allSessions(final long projectId) {
 		if (projectId == 0) {
-			renderJSON(gson().toJson(WorkingSession.all().fetch()));
+			renderJSON(gson().toJson(WorkingSession.findAllowed()));
 		} else {
 			renderJSON(gson().toJson(WorkingSession.findByProject(projectId)));
 		}

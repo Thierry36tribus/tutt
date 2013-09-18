@@ -77,6 +77,7 @@ angular.module('tutt.controllers', []).
         $scope.create = function(query) {
             $http.post('/create', query).success(function() {
                 $scope.projects = Project.query()    
+                $scope.searched = ''
             });
 
         }            

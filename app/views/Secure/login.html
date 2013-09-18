@@ -3,7 +3,11 @@
 <div id="login">
 	
 	<h1>&{'secure.title'}</h1>
-		
+    <p>Welcome on the ugly home page of Tutt, The Ultimate Time Tracker!</p>
+    <p>Don't be afraid. Enter your login, it'll be nice in a moment.</p>
+    <br>
+    <p>You can try it with username <i>demo</i> and password <i>demo</i></p>
+    <p>Want to be an alpha-tester? Mail to thierry at 36tribus.com</p>
 	#{form @authenticate()}
 		
 		#{if flash.error}
@@ -33,4 +37,5 @@
 			<input type="submit" id="signin" value="&{'secure.signin'}" />
 		</p>
 	#{/form}
+    <p><a href="http://www.36tribus.com">36tribus.com</a></p>
 </div>

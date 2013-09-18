@@ -1,5 +1,6 @@
 package models;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -25,6 +26,14 @@ public class TuttUser extends Model {
 	@Override
 	public String toString() {
 		return "TuttUser [login=" + login + "]";
+	}
+
+	public void add(final Project project) {
+		if (projects == null) {
+			projects = new LinkedList<Project>();
+		}
+		projects.add(project);
+		save();
 	}
 
 }
