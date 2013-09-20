@@ -150,6 +150,21 @@ angular.module('tutt.controllers', []).
                 return calcDuration(session) + sum;
             },0)
         }
+        $scope.sumPeriod = function() {
+            var endSession =  $scope.getEndOfPeriodSession()
+            if (endSession) {
+                return $scope.sessions.reduce(function(sum, session){
+                    if (session.stop > endSession.stop) {
+                        return calcDuration(session) + sum;
+                    } else {
+                        return sum               
+                    }
+                },0)
+            } else {
+                return 0
+            }
+        }        
+        
         $scope.since = function() {
             return moment($scope.project.lastUpdate).format('dddd H:mm')
         }
@@ -184,6 +199,7 @@ angular.module('tutt.controllers', []).
                 // pour pouvoir restaurer en cas de cancel  
                 session.originalStart = session.start
                 session.originalStop = session.stop
+                session.originalEndOfPeriod = session.endOfPeriod
             }
             session.modifying = !session.modifying
         }
@@ -191,6 +207,7 @@ angular.module('tutt.controllers', []).
             if (session.originalStart && session.originalStop) {
                 session.start = session.originalStart
                 session.stop = session.originalStop
+                session.endOfPeriod = session.originalEndOfPeriod
             }
             session.modifying = false
         }    
@@ -208,6 +225,28 @@ angular.module('tutt.controllers', []).
                     }
                 })
             }            
+        }
+        
+        
+        $scope.getColor = function(session) {
+            var endSession =  $scope.getEndOfPeriodSession()
+            if (endSession && session.stop <= endSession.stop) {
+                return "lightgray"
+            } 
+            return session.project.color
+        }
+        
+        /* Session correspondant à  la date de fin de période la + récente (ou plus vielle session sinon) */
+        $scope.getEndOfPeriodSession = function() {
+            var endSession = false
+            $scope.sessions.forEach(function(session){
+                if (session.endOfPeriod) {
+                    if (!endSession || session.stop > endSession.stop) {
+                        endSession = session 
+                    }
+                }
+            })
+            return endSession
         }
         
     }])

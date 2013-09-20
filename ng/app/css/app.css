@@ -118,6 +118,11 @@ h1 {
     cursor:pointer;
 }
 
+.session .panel-body input[type=checkbox] {
+    margin-left : 10px;
+    margin-right:10px;    
+}
+
 .session .panel-title {
     padding-left: 5px;
 }

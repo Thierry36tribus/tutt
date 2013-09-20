@@ -24,17 +24,22 @@
 
 <div class="row">
     <div class="col-xs-12 col-sm-6">
-        <p>From the beginning: <span class="sum">{{sum() / 3600  | number:1 }} hours</span></p>
+        <p ng-show="getEndOfPeriodSession()">For this period (from {{getEndOfPeriodSession().stop | date:'MM/dd'}}): 
+            <span class="sum">{{sumPeriod() / 3600 | number:1}} hours</span>
+        </p>
+        <p>From the beginning: 
+            <span class="sum">{{sum() / 3600  | number:1 }} hours</span>
+        </p>
         <ul class="list-unstyled project-sessions">
             <li ng-repeat="session in sessions | orderBy:'start':true" class="session panel panel-default">
-                <div class="panel-heading" style="line-height:{{height(session)}}px;height:{{height(session)}}px; background-color:{{session.project.color}}" ng-click="openSessionModifying(session)" >
+                <div class="panel-heading" style="line-height:{{height(session)}}px;height:{{height(session)}}px; background-color:{{getColor(session)}}" ng-click="openSessionModifying(session)" >
                     <span class="panel-title">{{session.start | date:'MM/dd HH:mm'}}-{{session.stop | date:'HH:mm'}} - {{duration(session)}}</span>
                     <span class="open-indicator glyphicon glyphicon-chevron-down"/>
                 </div>
                 <div ng-show="isSessionModifying(session)" class="panel-body">
-                        
-                    <input type="number" ng-model="session.start">
-                    <input type="number" ng-model="session.stop">
+                    <input id="end" type="checkbox" ng-model="session.endOfPeriod"><label for id="end">End of period</label>                        
+                    <input type="number" ng-model="session.start" class="form-control">
+                    <input type="number" ng-model="session.stop" class="form-control">
                     <div class="buttons-bar">
                         <button class="btn btn-success btn-lg" ng-click="updateSession(session)"><span class="glyphicon glyphicon-chevron-down"/></button>
                         <button class="btn btn-warning btn-lg" ng-click="closeSessionModifying(session)"><span class="glyphicon glyphicon-remove"/></button>

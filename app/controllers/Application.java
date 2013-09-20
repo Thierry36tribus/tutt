@@ -79,6 +79,7 @@ public class Application extends Controller {
 		final WorkingSession session = WorkingSession.findById(postedSession.id);
 		session.start = postedSession.start;
 		session.stop = postedSession.stop;
+		session.endOfPeriod = postedSession.endOfPeriod;
 		session.save();
 		ok();
 	}

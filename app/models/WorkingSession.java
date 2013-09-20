@@ -22,6 +22,8 @@ public class WorkingSession extends Model {
 
 	public Date stop;
 
+	public boolean endOfPeriod;
+
 	@ManyToOne
 	@Required
 	public Project project;
