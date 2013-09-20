@@ -100,9 +100,6 @@ angular.module('tutt.controllers', []).
         $scope.project = Project.get({projectId: $routeParams.projectId}, null)
         $scope.sessions = Sessions.query({projectId: $routeParams.projectId})
         $scope.labelModifying = false
-        $scope.sessions.forEach(function(session) {
-            session.modifying = false
-        })
         
         $scope.startedProject = Project.started()
 
@@ -196,10 +193,29 @@ angular.module('tutt.controllers', []).
                     return
                 }
                 
+                
+                // pour datePicker qui bosse avec des objets Date
+                session.dateStart = new Date(session.start)
+                if (session.stop) {
+                    session.dateStop = new Date(session.stop)
+                }
+                $scope.$watch(function() { return session.dateStart},function(newValue,oldValue){
+                    session.start = session.dateStart.getTime()
+                    console.log("session start changed : " + oldValue +" -> " +newValue +", " + session.start)
+                })
+                
+                
+                
+                
+                
+                
+                
+                
                 // pour pouvoir restaurer en cas de cancel  
                 session.originalStart = session.start
                 session.originalStop = session.stop
                 session.originalEndOfPeriod = session.endOfPeriod
+                
             }
             session.modifying = !session.modifying
         }

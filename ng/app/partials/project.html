@@ -38,6 +38,12 @@
                 </div>
                 <div ng-show="isSessionModifying(session)" class="panel-body">
                     <input id="end" type="checkbox" ng-model="session.endOfPeriod"><label for id="end">End of period</label>                        
+                    
+                    <div class="form-horizontal">
+                        <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="session.start" ng-required="true" />
+                    </div>
+                    
+                    
                     <input type="number" ng-model="session.start" class="form-control">
                     <input type="number" ng-model="session.stop" class="form-control">
                     <div class="buttons-bar">
