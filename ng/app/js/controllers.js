@@ -264,5 +264,18 @@ angular.module('tutt.controllers', []).
             return endSession
         }
         
+        $scope.isEndOfDay = function(session) {
+            for (var i=0; i < $scope.sessions.length; i++) {
+                if (session.id === $scope.sessions[i].id) {
+                    if (i == 0) {
+                        return true
+                    }
+                    return !moment($scope.sessions[i].start).isSame($scope.sessions[i-1].start,'day')
+
+                }
+            }
+            return false
+        }
+        
     }])
     .controller('InfosCtrl', [function() { }]);

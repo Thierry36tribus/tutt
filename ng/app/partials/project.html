@@ -36,8 +36,9 @@
         </p>
         <ul class="list-unstyled project-sessions">
             <li ng-repeat="session in sessions | orderBy:'start':true" class="session panel panel-default">
+                <div ng-show="isEndOfDay(session)" class="day-separator" style="background-color:{{getColor(session)}}">{{session.start | date:'MM/dd'}}</div>
                 <div class="panel-heading" style="line-height:{{height(session)}}px;height:{{height(session)}}px; background-color:{{getColor(session)}}" ng-click="openSessionModifying(session)" >
-                    <span class="panel-title">{{session.start | date:'MM/dd HH:mm'}}-{{session.stop | date:'HH:mm'}} - {{duration(session)}}</span>
+                    <span class="panel-title">&nbsp;&nbsp;{{session.start | date:'HH:mm'}}-{{session.stop | date:'HH:mm'}} - {{duration(session)}}</span>
                     <span class="open-indicator glyphicon glyphicon-chevron-down"/>
                 </div>
                 <div ng-show="isSessionModifying(session)" class="panel-body">
