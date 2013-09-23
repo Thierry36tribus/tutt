@@ -56,6 +56,11 @@ h1 {
     height:56px;
 }
 
+.day-separator-all {
+    padding-left:3px;
+    background-color:lightgray;
+}
+
 /* Page projet ------------------------------ */
 
 .project-header {

@@ -18,10 +18,18 @@
     <div class="col-sm-6 col-xs-2">
         <p class="hidden-xs">Your activity:</p>
         <ul class="list-unstyled">
-            <li ng-repeat="session in sessions | orderBy:'start':true" style="background-color:{{session.project.color}};line-height:{{height(session)}}px;height:{{height(session)}}px" class="session">
+            <li ng-repeat="session in sessions | orderBy:'start':true" >
                 <span class="hidden-xs">
-                    {{session.start | date:'MM/dd HH:mm'}} -> {{session.stop | date:'HH:mm'}} - {{duration(session)}} on {{session.project.label}}
+                    <div ng-show="isEndOfDay(session)" class="day-separator-all">{{session.start | date:'MM/dd'}}</div>
                 </span>
+                <span class="visible-xs">
+                    <div ng-show="isEndOfDay(session)" class="day-separator-all">{{session.start | date:'dd'}}</div>
+                </span>
+                <div style="background-color:{{session.project.color}};line-height:{{height(session)}}px;height:{{height(session)}}px" class="session">
+                    <span class="hidden-xs">
+                        &nbsp;&nbsp;&nbsp;{{session.start | date:'HH:mm'}} -> {{session.stop | date:'HH:mm'}} - {{duration(session)}} on {{session.project.label}}
+                    </span>
+                </div>
             </li>
         </ul>
     </div>

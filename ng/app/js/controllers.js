@@ -39,6 +39,19 @@ var calcHeight = function(session) {
     return h
 }
 
+var searchIfIsEndOfDay = function(sessions,session) {
+    for (var i=0; i < sessions.length; i++) {
+        if (session.id === sessions[i].id) {
+            if (i == 0) {
+                return true
+            }
+            //console.log("searchIfIsEndOfDay " + i + ": " + moment(sessions[i].start).format('DD/MM HH:mm') + '- ' + moment(sessions[i-1].start).format('DD/MM HH:mm') + ' return ' +  !moment(sessions[i].start).isSame(sessions[i-1].start,'day'))
+            return !moment(sessions[i].start).isSame(sessions[i-1].start,'day')
+        }
+    }
+    return false    
+}
+
 angular.module('tutt.controllers', []).
     controller('ProjectsCtrl', ['$scope','$http','Project','Sessions',function($scope,$http,Project,Sessions) {
         $scope.projects = Project.query()
@@ -91,6 +104,9 @@ angular.module('tutt.controllers', []).
             return $scope.projects.some(function(project) {
                 return project.label.trim().toLowerCase() == label.trim().toLowerCase()  
             })
+        }
+        $scope.isEndOfDay = function(session) {
+            return searchIfIsEndOfDay($scope.sessions,session)
         }
     }])
    .controller('ProjectCtrl', ['$scope','$routeParams','$location','Project','Sessions', function($scope,$routeParams,$location,Project,Sessions) {
@@ -265,16 +281,7 @@ angular.module('tutt.controllers', []).
         }
         
         $scope.isEndOfDay = function(session) {
-            for (var i=0; i < $scope.sessions.length; i++) {
-                if (session.id === $scope.sessions[i].id) {
-                    if (i == 0) {
-                        return true
-                    }
-                    return !moment($scope.sessions[i].start).isSame($scope.sessions[i-1].start,'day')
-
-                }
-            }
-            return false
+            return searchIfIsEndOfDay($scope.sessions,session)
         }
         
     }])
