@@ -6,6 +6,10 @@
   </div>
   <div class="panel-body" ng-show="isLabelModifying()">
         <input type="text" ng-model="project.label" class="form-control input-lg">
+        <div class="colorpicker">
+            <label for="colorpicker">Color: </label>
+            <input id="colorpicker" colorpicker="hex" type="text" ng-model="project.color" />
+        </div>
         <div class="buttons-bar">
             <button class="btn btn-success btn-lg" ng-click="updateProject()"><span class="glyphicon glyphicon-chevron-down"/></button>
             <button class="btn btn-warning btn-lg" ng-click="closeLabelModifying()"><span class="glyphicon glyphicon-remove"/></button>
@@ -42,13 +46,13 @@
                         <table>
                             <tr>    
                                 <td><span class="label-from-to">from</span></td>
-                                <td><input type="number" ng-model="session.editStartHours" min="0" max="23"></td>
-                                <td><input type="number" ng-model="session.editStartMinutes" step="15" min="0" max="59"></td>
+                                <td><input type="number" ng-model="session.editStartHours" min="0" max="23" required></td>
+                                <td><input type="number" ng-model="session.editStartMinutes" step="15" min="0" max="59" required></td>
                             </tr>    
                             <tr>    
                                 <td><span class="label-from-to">to</span></td>
-                                <td><input type="number" ng-model="session.editStopHours" min="0" max="23"></td>
-                                <td><input type="number" ng-model="session.editStopMinutes" step="15" min="0" max="59"></td>
+                                <td><input type="number" ng-model="session.editStopHours" min="0" max="23" required></td>
+                                <td><input type="number" ng-model="session.editStopMinutes" step="15" min="0" max="59" required></td>
                             </tr>
                         </table>    
                     </div>

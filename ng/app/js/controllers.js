@@ -92,12 +92,10 @@ angular.module('tutt.controllers', []).
                 return project.label.trim().toLowerCase() == label.trim().toLowerCase()  
             })
         }
-        
-        $scope.toto = 12345
-
     }])
    .controller('ProjectCtrl', ['$scope','$routeParams','$location','Project','Sessions', function($scope,$routeParams,$location,Project,Sessions) {
         $scope.project = Project.get({projectId: $routeParams.projectId}, null)
+
         $scope.sessions = Sessions.query({projectId: $routeParams.projectId})
         $scope.labelModifying = false
         
@@ -226,6 +224,11 @@ angular.module('tutt.controllers', []).
             stopDate.setMinutes(session.editStopMinutes)
             session.stop = stopDate.getTime()            
             
+            if (session.stop < session.start) {
+                alert("'To' can't be before 'From', please fix it.")
+                return
+            }
+            
             session.$save()
             session.modifying = false
         }
@@ -244,8 +247,8 @@ angular.module('tutt.controllers', []).
             var endSession =  $scope.getEndOfPeriodSession()
             if (endSession && session.stop <= endSession.stop) {
                 return "lightgray"
-            } 
-            return session.project.color
+            }
+            return $scope.project.color
         }
         
         /* Session correspondant à  la date de fin de période la + récente (ou plus vielle session sinon) */

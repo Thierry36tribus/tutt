@@ -68,6 +68,10 @@ h1 {
     font-weight:bold;
 }
 
+.colorpicker {
+    margin-top: 10px;
+}
+
 .open-indicator {
     margin-right:5px;
 }

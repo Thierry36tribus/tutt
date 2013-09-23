@@ -1,6 +1,6 @@
 CACHE MANIFEST
       
-# 2013-09-23 08:48 v0.1
+# 2013-09-23 11:19 v0.1
 
 CACHE:
 index.html
@@ -24,6 +24,8 @@ libs/bootstrap/js/bootstrap.min.js
 libs/bootstrap/css/bootstrap.min.css
 libs/ui-bootstrap-0.6.0.min.js
 libs/ui-bootstrap-tpls-0.6.0.min.js
+libs/colorpicker/bootstrap-colorpicker-module.js
+libs/colorpicker/colorpicker.css
 
 FALLBACK:
 
