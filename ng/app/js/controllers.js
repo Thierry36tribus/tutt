@@ -191,25 +191,13 @@ angular.module('tutt.controllers', []).
                 if (!session.stop) {
                     alert("You can't modify a working session in progress.")
                     return
-                }
-                
-                
-                // pour datePicker qui bosse avec des objets Date
-                session.dateStart = new Date(session.start)
-                if (session.stop) {
-                    session.dateStop = new Date(session.stop)
-                }
-                $scope.$watch(function() { return session.dateStart},function(newValue,oldValue){
-                    session.start = session.dateStart.getTime()
-                    console.log("session start changed : " + oldValue +" -> " +newValue +", " + session.start)
-                })
-                
-                
-                
-                
-                
-                
-                
+                }                
+                session.editDate = new Date(session.start)
+                session.editStartHours = session.editDate.getHours()
+                session.editStartMinutes= session.editDate.getMinutes()
+                var stopDate = new Date(session.stop)
+                session.editStopHours = stopDate.getHours()
+                session.editStopMinutes= stopDate.getMinutes()
                 
                 // pour pouvoir restaurer en cas de cancel  
                 session.originalStart = session.start
@@ -229,6 +217,15 @@ angular.module('tutt.controllers', []).
         }    
         
         $scope.updateSession = function(session) {
+            session.editDate.setHours(session.editStartHours)
+            session.editDate.setMinutes(session.editStartMinutes)
+            session.start = session.editDate.getTime()
+
+            var stopDate = session.editDate
+            stopDate.setHours(session.editStopHours)
+            stopDate.setMinutes(session.editStopMinutes)
+            session.stop = stopDate.getTime()            
+            
             session.$save()
             session.modifying = false
         }
@@ -242,7 +239,6 @@ angular.module('tutt.controllers', []).
                 })
             }            
         }
-        
         
         $scope.getColor = function(session) {
             var endSession =  $scope.getEndOfPeriodSession()

@@ -37,15 +37,22 @@
                     <span class="open-indicator glyphicon glyphicon-chevron-down"/>
                 </div>
                 <div ng-show="isSessionModifying(session)" class="panel-body">
-                    <input id="end" type="checkbox" ng-model="session.endOfPeriod"><label for id="end">End of period</label>                        
-                    
-                    <div class="form-horizontal">
-                        <input type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="session.start" ng-required="true" />
+                    <div class="edit-dates">
+                        <input type="text" datepicker-popup="dd-MM-yyyy" ng-model="session.editDate" ng-required="true"/>
+                        <table>
+                            <tr>    
+                                <td><span class="label-from-to">from</span></td>
+                                <td><input type="number" ng-model="session.editStartHours" min="0" max="23"></td>
+                                <td><input type="number" ng-model="session.editStartMinutes" step="15" min="0" max="59"></td>
+                            </tr>    
+                            <tr>    
+                                <td><span class="label-from-to">to</span></td>
+                                <td><input type="number" ng-model="session.editStopHours" min="0" max="23"></td>
+                                <td><input type="number" ng-model="session.editStopMinutes" step="15" min="0" max="59"></td>
+                            </tr>
+                        </table>    
                     </div>
-                    
-                    
-                    <input type="number" ng-model="session.start" class="form-control">
-                    <input type="number" ng-model="session.stop" class="form-control">
+                    <input id="end" type="checkbox" ng-model="session.endOfPeriod"><label for id="end">This is the end of a period</label>                                  
                     <div class="buttons-bar">
                         <button class="btn btn-success btn-lg" ng-click="updateSession(session)"><span class="glyphicon glyphicon-chevron-down"/></button>
                         <button class="btn btn-warning btn-lg" ng-click="closeSessionModifying(session)"><span class="glyphicon glyphicon-remove"/></button>

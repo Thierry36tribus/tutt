@@ -108,8 +108,15 @@ h1 {
 }
 
 .session {
-    margin-bottom: 3px;
-    
+    margin-bottom: 3px;   
+}
+
+.edit-dates input {
+    margin-bottom:10px;
+}
+
+.label-from-to {
+    margin-right :10px;
 }
 
 .session .panel-heading {
@@ -119,8 +126,7 @@ h1 {
 }
 
 .session .panel-body input[type=checkbox] {
-    margin-left : 10px;
-    margin-right:10px;    
+    margin:15px 10px;
 }
 
 .session .panel-title {
