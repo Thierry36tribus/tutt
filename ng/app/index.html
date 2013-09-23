@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/app.css"/>
 </head>
 <body>
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default" role="navigation" ng-controller="NavCtrl">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-content">
                 <span class="sr-only">Toggle navigation</span>
@@ -24,7 +24,8 @@
               <!-- <li><a href="#/settings">Settings</a></li> -->
               <li><a href="#/infos">About</a></li>
               <li><a href="/logout">Logout</a></li>
-          </ul>
+            </ul>
+            <span class="glyphicon glyphicon-stats" style="background-color:{{onLineColor}}"></span>
         </div>
     </nav>    
     

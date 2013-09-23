@@ -5,15 +5,15 @@
     <span class="open-indicator glyphicon glyphicon-chevron-down"/>
   </div>
   <div class="panel-body" ng-show="isLabelModifying()">
-        <input type="text" ng-model="project.label" class="form-control input-lg">
+        <input type="text" ng-model="project.label" class="form-control input-lg" ng-disabled="isDisabled">
         <div class="colorpicker">
             <label for="colorpicker">Color: </label>
-            <input id="colorpicker" colorpicker="hex" type="text" ng-model="project.color" />
+            <input id="colorpicker" colorpicker="hex" type="text" ng-model="project.color" ng-disabled="isDisabled" />
         </div>
         <div class="buttons-bar">
-            <button class="btn btn-success btn-lg" ng-click="updateProject()"><span class="glyphicon glyphicon-chevron-down"/></button>
+            <button class="btn btn-success btn-lg" ng-click="updateProject()" ng-disabled="isDisabled"><span class="glyphicon glyphicon-chevron-down"/></button>
             <button class="btn btn-warning btn-lg" ng-click="closeLabelModifying()"><span class="glyphicon glyphicon-remove"/></button>
-            <button class="btn btn-danger btn-lg" ng-click="deleteProject()"><span class="glyphicon glyphicon-trash"/></button>
+            <button class="btn btn-danger btn-lg" ng-click="deleteProject()" ng-disabled="isDisabled"><span class="glyphicon glyphicon-trash"/></button>
         </div>        
     </div>
 </div>
@@ -43,25 +43,25 @@
                 </div>
                 <div ng-show="isSessionModifying(session)" class="panel-body">
                     <div class="edit-dates">
-                        <input type="text" datepicker-popup="dd-MM-yyyy" ng-model="session.editDate" ng-required="true"/>
+                        <input type="text" datepicker-popup="dd-MM-yyyy" ng-model="session.editDate" ng-required="true" ng-disabled="isDisabled"/>
                         <table>
                             <tr>    
                                 <td><span class="label-from-to">from</span></td>
-                                <td><input type="number" ng-model="session.editStartHours" min="0" max="23" required></td>
-                                <td><input type="number" ng-model="session.editStartMinutes" step="15" min="0" max="59" required></td>
+                                <td><input type="number" ng-model="session.editStartHours" min="0" max="23" required ng-disabled="isDisabled"></td>
+                                <td><input type="number" ng-model="session.editStartMinutes" step="15" min="0" max="59" required ng-disabled="isDisabled"></td>
                             </tr>    
                             <tr>    
                                 <td><span class="label-from-to">to</span></td>
-                                <td><input type="number" ng-model="session.editStopHours" min="0" max="23" required></td>
-                                <td><input type="number" ng-model="session.editStopMinutes" step="15" min="0" max="59" required></td>
+                                <td><input type="number" ng-model="session.editStopHours" min="0" max="23" required ng-disabled="isDisabled"></td>
+                                <td><input type="number" ng-model="session.editStopMinutes" step="15" min="0" max="59" required ng-disabled="isDisabled"></td>
                             </tr>
                         </table>    
                     </div>
-                    <input id="end" type="checkbox" ng-model="session.endOfPeriod"><label for id="end">This is the end of a period</label>                                  
+                    <input id="end" type="checkbox" ng-model="session.endOfPeriod" ng-disabled="isDisabled"><label for id="end">This is the end of a period</label>                                  
                     <div class="buttons-bar">
-                        <button class="btn btn-success btn-lg" ng-click="updateSession(session)"><span class="glyphicon glyphicon-chevron-down"/></button>
+                        <button class="btn btn-success btn-lg" ng-click="updateSession(session)" ng-disabled="isDisabled"><span class="glyphicon glyphicon-chevron-down"/></button>
                         <button class="btn btn-warning btn-lg" ng-click="closeSessionModifying(session)"><span class="glyphicon glyphicon-remove"/></button>
-                        <button class="btn btn-danger btn-lg" ng-click="deleteSession(session)"><span class="glyphicon glyphicon-trash"/></button>
+                        <button class="btn btn-danger btn-lg" ng-click="deleteSession(session)" ng-disabled="isDisabled"><span class="glyphicon glyphicon-trash"/></button>
                     </div>
                 </div>
                     
@@ -70,6 +70,6 @@
     </div>
     <div class="col-sm-6 hidden-xs">
         <br><br>
-        <a href="/excel/{{project.id}}">Download an Excel file</a>
+        <a href="/excel/{{project.id}}" ng-show="isActive" >Download an Excel file</a>
     </div>
 </div>

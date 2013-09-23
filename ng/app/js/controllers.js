@@ -52,8 +52,27 @@ var searchIfIsEndOfDay = function(sessions,session) {
     return false    
 }
 
-angular.module('tutt.controllers', []).
-    controller('ProjectsCtrl', ['$scope','$http','Project','Sessions',function($scope,$http,Project,Sessions) {
+angular.module('tutt.controllers', [])
+    .controller('NavCtrl', ['$scope','onLineStatus',function($scope,onLineStatus) {
+        $scope.onLineStatus = onLineStatus;
+        var getColor = function(onLine) {
+            return onLine ? "green" : "red"
+        }
+        $scope.onLineColor = getColor(onLineStatus.isOnLine())
+        $scope.$watch('onLineStatus.isOnLine()', function(onLine) {
+            $scope.onLineColor = getColor(onLine)
+        })
+    }])
+    .controller('ProjectsCtrl', ['$scope','$http','Project','Sessions','onLineStatus',function($scope,$http,Project,Sessions,onLineStatus) {
+        var getSearchOrCreateText = function(onLine) {
+            return onLine ? "Search or create" : "Search"
+        }
+        $scope.onLineStatus = onLineStatus;
+        $scope.searchOrCreateText = getSearchOrCreateText(onLineStatus.isOnLine())
+        $scope.$watch('onLineStatus.isOnLine()', function(onLine) {
+            $scope.searchOrCreateText = getSearchOrCreateText(onLine)
+        })        
+        
         $scope.projects = Project.query()
         $scope.sessions = Sessions.query()
 
@@ -109,18 +128,24 @@ angular.module('tutt.controllers', []).
             return searchIfIsEndOfDay($scope.sessions,session)
         }
     }])
-   .controller('ProjectCtrl', ['$scope','$routeParams','$location','Project','Sessions', function($scope,$routeParams,$location,Project,Sessions) {
-        $scope.project = Project.get({projectId: $routeParams.projectId}, null)
+   .controller('ProjectCtrl', ['$scope','$routeParams','$location','Project','Sessions','onLineStatus', function($scope,$routeParams,$location,Project,Sessions,onLineStatus) {
+        $scope.onLineStatus = onLineStatus;
+        $scope.isActive = onLineStatus.isOnLine()
+        $scope.isDisabled = !onLineStatus.isOnLine()
+        $scope.$watch('onLineStatus.isOnLine()', function(onLine) {
+            $scope.isActive = onLine
+            $scope.isDisabled = !onLine
+        })
 
+        
+        $scope.project = Project.get({projectId: $routeParams.projectId}, null)
         $scope.sessions = Sessions.query({projectId: $routeParams.projectId})
         $scope.labelModifying = false
         
         $scope.startedProject = Project.started()
-
         $scope.isStarted = function() {
             return $scope.startedProject && $scope.startedProject.id && $scope.project.id == $scope.startedProject.id
-        }    
-       
+        }       
         $scope.start = function(){
             $scope.project.$start()
             $scope.startedProject = $scope.project
