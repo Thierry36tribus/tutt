@@ -28,9 +28,12 @@ public class WorkingSession extends Model {
 	@Required
 	public Project project;
 
-	public WorkingSession(final Project project) {
+	public long userId;
+
+	public WorkingSession(final Project project, final TuttUser user) {
 		super();
 		this.project = project;
+		this.userId = user.id;
 		start = project.lastUpdate;
 	}
 
@@ -41,10 +44,7 @@ public class WorkingSession extends Model {
 
 	public static List<WorkingSession> findAllowed() {
 		final TuttUser user = Security.connectedUser();
-
-		// TODO que celles du user connecté
-
-		final List<WorkingSession> all = find("order by start desc").fetch();
+		final List<WorkingSession> all = find("userId = ? order by start desc", user.id).fetch();
 		final List<WorkingSession> allowed = new LinkedList<WorkingSession>();
 		for (final WorkingSession session : all) {
 			if (user.projects.contains(session.project)) {
@@ -67,9 +67,7 @@ public class WorkingSession extends Model {
 	}
 
 	public static List<WorkingSession> findByProject(final long projectId) {
-		// TODO que celles du user connecté
-
-		return find("project.id =? order by start desc", projectId).fetch();
+		return find("project.id =? and userId = ? order by start desc", projectId, Security.connectedUser().id).fetch();
 	}
 
 	public String getStartAsStr() {

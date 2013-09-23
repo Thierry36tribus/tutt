@@ -66,7 +66,7 @@ public class Project extends Model {
 		if (session != null) {
 			session.project.stop();
 		}
-		final WorkingSession newSession = new WorkingSession(this);
+		final WorkingSession newSession = new WorkingSession(this, Security.connectedUser());
 		newSession.create();
 	}
 
