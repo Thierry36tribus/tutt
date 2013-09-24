@@ -36,5 +36,25 @@ angular.module('tutt.services', ['ngResource'])
     
         return onLineStatus;
     }])
+    .factory('projectsManager', ['$window','$rootScope','$http', function ($window,$rootScope,$http) {
+        var KEY_PROJECTS = 'tutt.projects'
+        var projectsManager = {}
+        projectsManager.findAll = function() {
+           if (!projectsManager.all) {
+                projectsManager.all = JSON.parse($window.localStorage.getItem(KEY_PROJECTS))
+                $http({method: 'GET', url: '/projects'})
+                    .success(function(data, status, headers, config) {
+                        $window.localStorage.setItem(KEY_PROJECTS,JSON.stringify(data))
+                        projectsManager.all = data                 
+                        $rootScope.$digest()
+                    })
+                    .error(function(data, status, headers, config) {
+                    // TODO si online, avertir l'utilisateur ?                   
+                    })
+           }
+           return projectsManager.all
+       }
+       return projectsManager
+    }])
 
 /* Voir http://ngmodules.org/modules/ngStorage pour localStorage */
