@@ -38,22 +38,40 @@ angular.module('tutt.services', ['ngResource'])
     }])
     .factory('projectsManager', ['$window','$rootScope','$http', function ($window,$rootScope,$http) {
         var KEY_PROJECTS = 'tutt.projects'
+        var KEY_STARTED = 'tutt.started'
         var projectsManager = {}
         projectsManager.findAll = function() {
            if (!projectsManager.all) {
                 projectsManager.all = JSON.parse($window.localStorage.getItem(KEY_PROJECTS))
-                $http({method: 'GET', url: '/projects'})
-                    .success(function(data, status, headers, config) {
+                $http.get('/projects')
+                    .success(function(data) {
                         $window.localStorage.setItem(KEY_PROJECTS,JSON.stringify(data))
                         projectsManager.all = data                 
-                        $rootScope.$digest()
+                       // inutile ? mais comment les données sont-elles mises à jour ? $rootScope.$digest()
                     })
                     .error(function(data, status, headers, config) {
                     // TODO si online, avertir l'utilisateur ?                   
                     })
            }
            return projectsManager.all
-       }
+        }
+        projectsManager.started = function() {
+            if (!projectsManager.startedProject) {
+                projectsManager.startedProject = JSON.parse($window.localStorage.getItem(KEY_STARTED))
+                $http.get('/projects?started=true')
+                    .success(function(data) {
+                        $window.localStorage.setItem(KEY_STARTED,JSON.stringify(data))
+                        projectsManager.startedProject = data                 
+                       // inutile ? mais comment les données sont-elles mises à jour ? $rootScope.$digest()
+                    })
+                    .error(function(data, status, headers, config) {
+                    // TODO si online, avertir l'utilisateur ?                   
+                    })                
+            }
+            return projectsManager.startedProject
+        }
+        
+        
        return projectsManager
     }])
 

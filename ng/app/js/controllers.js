@@ -80,8 +80,8 @@ angular.module('tutt.controllers', [])
         $scope.$watch('projectsManager.findAll()',function(all) {
             $scope.projects = all
         })
+         //$scope.projects = Project.query()
         
-        //$scope.projects = Project.query()
         $scope.sessions = Sessions.query()
 
         $scope.label = function(project) {
@@ -92,7 +92,8 @@ angular.module('tutt.controllers', [])
             }
         }
         
-        $scope.startedProject = Project.started()        
+        //$scope.startedProject = Project.started()
+        $scope.startedProject = projectsManager.started()        
         $scope.start = function(project) {
             $scope.startedProject = project
             $scope.startedProject.$start()
@@ -100,7 +101,7 @@ angular.module('tutt.controllers', [])
             //$scope.projects = Project.query()
             $scope.projects = projectsManager.findAll()
             $scope.sessions = Sessions.query()
-            $scope.startedProject = Project.started()
+            $scope.startedProject = projectsManager.started()
 
         }
         $scope.stop = function(project) {
