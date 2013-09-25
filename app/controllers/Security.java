@@ -17,6 +17,9 @@ public class Security extends Secure.Security {
 	}
 
 	static boolean check(final String profile) {
+        if (TuttUser.count() == 0) {
+			return true;
+		}
 		if ("administrator".equals(profile)) {
 			return (connectedUser().login.equals("lechaman"));
 		}
