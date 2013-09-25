@@ -60,7 +60,9 @@ h1 {
     padding-left:3px;
     background-color:lightgray;
 }
-
+.day-separator+.panel-heading {
+    border-radius: 0;
+}
 /* Page projet ------------------------------ */
 
 .project-header {
