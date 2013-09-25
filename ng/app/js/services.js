@@ -37,6 +37,8 @@ angular.module('tutt.services', ['ngResource'])
         return onLineStatus;
     }])
     .factory('projectsManager', ['$window','$rootScope','$http', function ($window,$rootScope,$http) {
+        // NON UTILISE POUR L'INSTANT, en cours...
+        
         var KEY_PROJECTS = 'tutt.projects'
         var KEY_STARTED = 'tutt.started'
         var projectsManager = {}
@@ -70,6 +72,29 @@ angular.module('tutt.services', ['ngResource'])
             }
             return projectsManager.startedProject
         }
+        
+        projectsManager.start = function(project) {
+            var index = indexOf(project)
+            if (index >= 0) {
+                projectsManager.all[i].lastUpdate = new Date()
+                // TODO créer session, etc.
+                
+                
+            }
+        }
+        projectsManager.stop = function(project) {
+            
+        }
+        
+        var indexOf = function(project) {
+            for (var i=0; i < projectsManager.all.length; i++) {
+                if (projectsManager.all[i].id === project.id) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        
         
         
        return projectsManager

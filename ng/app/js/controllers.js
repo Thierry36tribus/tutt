@@ -75,12 +75,13 @@ angular.module('tutt.controllers', [])
         })        
         
         // projects
+        /*
         $scope.projectsManager = projectsManager
         $scope.projects = projectsManager.findAll()
         $scope.$watch('projectsManager.findAll()',function(all) {
             $scope.projects = all
-        })
-         //$scope.projects = Project.query()
+        })*/
+        $scope.projects = Project.query()
         
         $scope.sessions = Sessions.query()
 
@@ -92,16 +93,17 @@ angular.module('tutt.controllers', [])
             }
         }
         
-        //$scope.startedProject = Project.started()
-        $scope.startedProject = projectsManager.started()        
+        $scope.startedProject = Project.started()
+        //$scope.startedProject = projectsManager.started()        
         $scope.start = function(project) {
             $scope.startedProject = project
             $scope.startedProject.$start()
             // pour refresh de l'ordre TODO faire mieux que refaire une requête
-            //$scope.projects = Project.query()
-            $scope.projects = projectsManager.findAll()
+            $scope.projects = Project.query()
+            //$scope.projects = projectsManager.findAll()
             $scope.sessions = Sessions.query()
-            $scope.startedProject = projectsManager.started()
+            //$scope.startedProject = projectsManager.started()
+            $scope.startedProject = Project.started()
 
         }
         $scope.stop = function(project) {
@@ -110,8 +112,8 @@ angular.module('tutt.controllers', [])
                 $scope.startedProject=null
             }
             // pour refresh de l'ordre TODO faire mieux que refaire une requête
-            //$scope.projects = Project.query()
-            $scope.projects = projectsManager.findAll()
+            $scope.projects = Project.query()
+            //$scope.projects = projectsManager.findAll()
             $scope.sessions = Sessions.query()
         }
         $scope.isStarted = function(project) {
@@ -119,8 +121,8 @@ angular.module('tutt.controllers', [])
         }
         $scope.create = function(query) {
             $http.post('/create', query).success(function() {
-                //$scope.projects = Project.query()    
-                $scope.projects = projectsManager.findAll()
+                $scope.projects = Project.query()    
+                //$scope.projects = projectsManager.findAll()
                 $scope.searched = ''
             });
 
