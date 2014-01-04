@@ -46,9 +46,14 @@ public class WorkingSession extends Model {
 		final TuttUser user = Security.connectedUser();
 		final List<WorkingSession> all = find("userId = ? order by start desc", user.id).fetch();
 		final List<WorkingSession> allowed = new LinkedList<WorkingSession>();
+		int count = 0;
 		for (final WorkingSession session : all) {
 			if (user.projects.contains(session.project)) {
 				allowed.add(session);
+				count++;
+				if (count == 20) {
+					break;
+				}
 			}
 		}
 		return allowed;
