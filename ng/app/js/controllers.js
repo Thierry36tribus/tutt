@@ -53,20 +53,27 @@ var searchIfIsEndOfDay = function(sessions,session) {
 }
 
 angular.module('tutt.controllers', [])
-    .controller('NavCtrl', ['$scope','onLineStatus',function($scope,onLineStatus) {
-        $scope.onLineStatus = onLineStatus;
-        var getColor = function(onLine) {
-            return onLine ? "green" : "red"
-        }
-        $scope.onLineColor = getColor(onLineStatus.isOnLine())
-        $scope.$watch('onLineStatus.isOnLine()', function(onLine) {
-            $scope.onLineColor = getColor(onLine)
-        })
+    .controller('NavCtrl', ['$scope',function($scope) {
     }])
-    .controller('ProjectsCtrl', ['$scope','$http','projectsManager','Project','Sessions',function($scope,$http,projectsManager,Project,Sessions) {
-        $scope.projects = Project.query()
+    .controller('ProjectsCtrl', ['$scope','$http',function($scope,$http) {
         
-        $scope.sessions = Sessions.query()
+        var getProjects = function() {
+            $http.get('/projects').success(function(projects){
+                $scope.projects = projects
+            })            
+        }
+        
+        var updateData = function() {
+            getProjects()
+            $http.get('/sessions').success(function(sessions){
+                $scope.sessions = sessions
+            })
+            $http.get('/projects?started=true').success(function(startedProject){
+                $scope.startedProject = startedProject
+            })            
+        }
+        updateData()
+        
 
         $scope.label = function(project) {
             if ($scope.isStarted(project)) {
@@ -75,37 +82,27 @@ angular.module('tutt.controllers', [])
                 return project.label
             }
         }
-        
-        $scope.startedProject = Project.started()
-        //$scope.startedProject = projectsManager.started()        
         $scope.start = function(project) {
             $scope.startedProject = project
-            $scope.startedProject.$start()
-            // pour refresh de l'ordre TODO faire mieux que refaire une requête
-            $scope.projects = Project.query()
-            //$scope.projects = projectsManager.findAll()
-            $scope.sessions = Sessions.query()
-            //$scope.startedProject = projectsManager.started()
-            $scope.startedProject = Project.started()
-
+            $http.post('/projects?start=true',project).success(function(){
+                // pour refresh de l'ordre TODO faire mieux que refaire une requête
+                updateData()                
+            })
         }
         $scope.stop = function(project) {
             if ($scope.startedProject) {
-                $scope.startedProject.$stop()
-                $scope.startedProject=null
+                $http.post('/projects?stop=true',project).success(function(){
+                    $scope.startedProject=null
+                    updateData()                
+                })
             }
-            // pour refresh de l'ordre TODO faire mieux que refaire une requête
-            $scope.projects = Project.query()
-            //$scope.projects = projectsManager.findAll()
-            $scope.sessions = Sessions.query()
         }
         $scope.isStarted = function(project) {
             return $scope.startedProject && $scope.startedProject.id == project.id
         }
         $scope.create = function(query) {
             $http.post('/create', query).success(function() {
-                $scope.projects = Project.query()    
-                //$scope.projects = projectsManager.findAll()
+                getProjects()
                 $scope.searched = ''
             });
 
@@ -125,39 +122,49 @@ angular.module('tutt.controllers', [])
             return searchIfIsEndOfDay($scope.sessions,session)
         }
     }])
-   .controller('ProjectCtrl', ['$scope','$routeParams','$location','Project','Sessions', function($scope,$routeParams,$location,Project,Sessions) {
-        $scope.project = Project.get({projectId: $routeParams.projectId}, null)
-        $scope.sessions = Sessions.query({projectId: $routeParams.projectId})
+   .controller('ProjectCtrl', ['$scope','$routeParams','$location','$http', function($scope,$routeParams,$location,$http) {
+       var currentProject 
+       var updateData = function() {
+            $http.get('/projects/' + $routeParams.projectId).success(function(project){
+                $scope.project = currentProject = project
+            })            
+            $http.get('/sessions?projectId='+ $routeParams.projectId).success(function(sessions){
+                $scope.sessions = sessions
+            })
+            $http.get('/projects?started=true').success(function(startedProject){
+                $scope.startedProject = startedProject
+            })            
+        }
+        updateData()
         $scope.labelModifying = false
         
-        $scope.startedProject = Project.started()
         $scope.isStarted = function() {
             return $scope.startedProject && $scope.startedProject.id && $scope.project.id == $scope.startedProject.id
         }       
         $scope.start = function(){
-            $scope.project.$start()
-            $scope.startedProject = $scope.project
-             // pour refresh TODO faire mieux que refaire une requête
-            $scope.project = Project.get({projectId: $routeParams.projectId}, null)
-            $scope.sessions = Sessions.query({projectId: $routeParams.projectId})
+            $http.post('/projects?start=true',currentProject).success(function(){
+                $scope.startedProject = $scope.project
+                // pour refresh de l'ordre TODO faire mieux que refaire une requête
+                updateData()                
+            })
         }
         $scope.stop = function(){
-            $scope.project.$stop()
-            $scope.startedProject = null
-             // pour refresh TODO faire mieux que refaire une requête
-            $scope.project = Project.get({projectId: $routeParams.projectId}, null)
-            $scope.sessions = Sessions.query({projectId: $routeParams.projectId})
+            $http.post('/projects?stop=true',currentProject).success(function(){
+                $scope.startedProject=null
+                updateData()                
+            })
         }
         
         $scope.updateProject = function() {
             // TODO vérifier unicité label
-            $scope.project.$save()
-            $scope.labelModifying = false
+            $http.post('/projects',currentProject).success(function(){
+                $scope.labelModifying = false
+            })
         }
         
         $scope.deleteProject =function() {
             if (confirm("Remove this project?")) {
-                $scope.project.$delete({'projectId':$scope.project.id},function(){
+                $http.delete('/projects/' + $scope.project.id).success(function(){                    
                     $location.path( "/" )
                 })
             }
@@ -170,9 +177,13 @@ angular.module('tutt.controllers', [])
             return calcHeight(session)
         }
         $scope.sum = function() {
-            return $scope.sessions.reduce(function(sum, session){
-                return calcDuration(session) + sum;
-            },0)
+            if ($scope.sessions) {
+                return $scope.sessions.reduce(function(sum, session){
+                    return calcDuration(session) + sum;
+                },0)
+            } else {
+                return 0
+            }
         }
         $scope.sumPeriod = function() {
             var endSession =  $scope.getEndOfPeriodSession()
@@ -190,7 +201,7 @@ angular.module('tutt.controllers', [])
         }        
         
         $scope.since = function() {
-            return moment($scope.project.lastUpdate).format('dddd H:mm')
+            return $scope.project ? moment($scope.project.lastUpdate).format('dddd H:mm') : '?'
         }
         
         $scope.isLabelModifying = function() {
@@ -258,12 +269,13 @@ angular.module('tutt.controllers', [])
                 return
             }
             
-            session.$save()
-            session.modifying = false
+            $http.post('/sessions',session).success(function(){
+                session.modifying = false                
+            })
         }
         $scope.deleteSession = function(session) {
             if (confirm("Remove this working session?")) {
-                session.$delete({'sessionId':session.id},function() {
+                $http.delete('/sessions/' + session.id).success(function(){                    
                     var index = $scope.sessions.indexOf(session)
                     if (index >=0){
                         $scope.sessions.splice(index,1)
@@ -277,19 +289,21 @@ angular.module('tutt.controllers', [])
             if (endSession && session.stop <= endSession.stop) {
                 return "lightgray"
             }
-            return $scope.project.color
+            return $scope.project ? $scope.project.color : "black"
         }
         
         /* Session correspondant à  la date de fin de période la + récente (ou plus vielle session sinon) */
         $scope.getEndOfPeriodSession = function() {
             var endSession = false
-            $scope.sessions.forEach(function(session){
-                if (session.endOfPeriod) {
-                    if (!endSession || session.stop > endSession.stop) {
-                        endSession = session 
+            if ($scope.sessions) {
+                $scope.sessions.forEach(function(session){
+                    if (session.endOfPeriod) {
+                        if (!endSession || session.stop > endSession.stop) {
+                            endSession = session 
+                        }
                     }
-                }
-            })
+                })
+            }
             return endSession
         }
         

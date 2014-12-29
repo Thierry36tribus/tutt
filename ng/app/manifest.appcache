@@ -1,6 +1,6 @@
 CACHE MANIFEST
       
-# 2013-09-25 09:25 v0.2
+# 2014-12-29 16:29 v0.3
 
 CACHE:
 index.html
@@ -17,7 +17,6 @@ partials/projects.html
 
 libs/jquery-2.0.3.min.js
 libs/angular/angular.js
-libs/angular/angular-resource.js
 libs/timer.js
 libs/moment.min.js
 libs/bootstrap/js/bootstrap.min.js
