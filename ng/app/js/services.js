@@ -100,4 +100,3 @@ angular.module('tutt.services', ['ngResource'])
        return projectsManager
     }])
 
-/* Voir http://ngmodules.org/modules/ngStorage pour localStorage */

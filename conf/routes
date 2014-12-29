@@ -3,7 +3,7 @@
 *     /admin           module:crud
 *     /                module:secure
 
-GET		/							Application.index
+GET		/index						Application.index
 
 GET		/excel/{projectId}			Application.excel
 
@@ -26,6 +26,8 @@ GET     /favicon.ico                            404
 GET     /public/                                staticDir:public
 
 
+# Angular
+GET		/								Application.index
 GET     /app/                           staticDir:ng/app
 
 

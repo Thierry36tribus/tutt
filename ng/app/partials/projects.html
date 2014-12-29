@@ -5,7 +5,7 @@
             <p>It'll help you to be focused, and maybe you'll never use a time tracker at all...</p>
         </div>        
         <div class="search">
-            <label for="search">{{searchOrCreateText}}: </label>
+            <label for="search">Search or create: </label>
             <input id="search" ng-model="searched" type="search" role="search" class="form-control" placeholder="Name of the project">
         </div>
         <ul class="list-unstyled projects">
@@ -13,7 +13,7 @@
                 <a ng-href="#/project/{{project.id}}" class="col-xs-9 col-sm-10">{{label(project)}}</a><button ng-show="!isStarted(project)" ng-click="start(project)" class="btn btn-lg btn-info col-xs-3 col-sm-2"><span class="glyphicon glyphicon-play"></span></button><button ng-show="isStarted(project)" ng-click="stop(project)" class="btn btn-lg btn-primary col-xs-3 col-sm-2"><span class="glyphicon glyphicon-stop"></span></button>
             </li>
         </ul>
-        <button ng-show="onLineStatus.isOnLine() && searched.length > 0 && !exists(searched)" ng-click="create(searched)" class="btn btn-primary">Create {{searched}}</button>
+        <button ng-show="searched.length > 0 && !exists(searched)" ng-click="create(searched)" class="btn btn-primary">Create {{searched}}</button>
     </div>
     <div class="col-sm-6 col-xs-2">
         <p class="hidden-xs">Your activity:</p>

@@ -63,24 +63,7 @@ angular.module('tutt.controllers', [])
             $scope.onLineColor = getColor(onLine)
         })
     }])
-    .controller('ProjectsCtrl', ['$scope','$http','projectsManager','Project','Sessions','onLineStatus',function($scope,$http,projectsManager,Project,Sessions,onLineStatus) {
-        // online
-        var getSearchOrCreateText = function(onLine) {
-            return onLine ? "Search or create" : "Search"
-        }
-        $scope.onLineStatus = onLineStatus;
-        $scope.searchOrCreateText = getSearchOrCreateText(onLineStatus.isOnLine())
-        $scope.$watch('onLineStatus.isOnLine()', function(onLine) {
-            $scope.searchOrCreateText = getSearchOrCreateText(onLine)
-        })        
-        
-        // projects
-        /*
-        $scope.projectsManager = projectsManager
-        $scope.projects = projectsManager.findAll()
-        $scope.$watch('projectsManager.findAll()',function(all) {
-            $scope.projects = all
-        })*/
+    .controller('ProjectsCtrl', ['$scope','$http','projectsManager','Project','Sessions',function($scope,$http,projectsManager,Project,Sessions) {
         $scope.projects = Project.query()
         
         $scope.sessions = Sessions.query()
@@ -142,16 +125,7 @@ angular.module('tutt.controllers', [])
             return searchIfIsEndOfDay($scope.sessions,session)
         }
     }])
-   .controller('ProjectCtrl', ['$scope','$routeParams','$location','Project','Sessions','onLineStatus', function($scope,$routeParams,$location,Project,Sessions,onLineStatus) {
-        $scope.onLineStatus = onLineStatus;
-        $scope.isActive = onLineStatus.isOnLine()
-        $scope.isDisabled = !onLineStatus.isOnLine()
-        $scope.$watch('onLineStatus.isOnLine()', function(onLine) {
-            $scope.isActive = onLine
-            $scope.isDisabled = !onLine
-        })
-
-        
+   .controller('ProjectCtrl', ['$scope','$routeParams','$location','Project','Sessions', function($scope,$routeParams,$location,Project,Sessions) {
         $scope.project = Project.get({projectId: $routeParams.projectId}, null)
         $scope.sessions = Sessions.query({projectId: $routeParams.projectId})
         $scope.labelModifying = false
