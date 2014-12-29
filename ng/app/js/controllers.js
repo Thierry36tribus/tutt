@@ -58,17 +58,23 @@ angular.module('tutt.controllers', [])
     .controller('ProjectsCtrl', ['$scope','$http',function($scope,$http) {
         
         var getProjects = function() {
+            $scope.loadingProjects = true
             $http.get('/projects').success(function(projects){
+                $scope.loadingProjects = false
                 $scope.projects = projects
             })            
         }
         
         var updateData = function() {
             getProjects()
+            $scope.loadingSessions = true
             $http.get('/sessions').success(function(sessions){
+                $scope.loadingSessions = false
                 $scope.sessions = sessions
             })
+            $scope.loadingStartedProject = true
             $http.get('/projects?started=true').success(function(startedProject){
+                $scope.loadingStartedProject = false
                 $scope.startedProject = startedProject
             })            
         }
@@ -125,13 +131,19 @@ angular.module('tutt.controllers', [])
    .controller('ProjectCtrl', ['$scope','$routeParams','$location','$http', function($scope,$routeParams,$location,$http) {
        var currentProject 
        var updateData = function() {
+            $scope.loadingProject = true           
             $http.get('/projects/' + $routeParams.projectId).success(function(project){
+                $scope.loadingProject = false           
                 $scope.project = currentProject = project
             })            
+            $scope.loadingSessions = true           
             $http.get('/sessions?projectId='+ $routeParams.projectId).success(function(sessions){
+                $scope.loadingSessions = false
                 $scope.sessions = sessions
             })
+            $scope.loadingStartedProject = true
             $http.get('/projects?started=true').success(function(startedProject){
+                $scope.loadingStartedProject = false
                 $scope.startedProject = startedProject
             })            
         }

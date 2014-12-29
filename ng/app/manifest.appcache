@@ -1,6 +1,6 @@
 CACHE MANIFEST
       
-# 2014-12-29 16:29 v0.3
+# 2014-12-29 16:54 v0.3
 
 CACHE:
 index.html
@@ -19,6 +19,8 @@ libs/jquery-2.0.3.min.js
 libs/angular/angular.js
 libs/timer.js
 libs/moment.min.js
+libs/spin/angular-spinner.min.js
+libs/spin/spin.min.js
 libs/bootstrap/js/bootstrap.min.js
 libs/bootstrap/css/bootstrap.min.css
 libs/ui-bootstrap-0.6.0.min.js
