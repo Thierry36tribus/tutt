@@ -21,4 +21,7 @@ test-result
 server.pid
 *.iml
 *.eml
+build
+node_modules
+npm-debug.log
 
