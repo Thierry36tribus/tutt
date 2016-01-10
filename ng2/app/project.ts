@@ -3,4 +3,6 @@ export interface Project {
   label: string;
   lastUpdate: number;
   color: string;
+
+  started: boolean;
 }
