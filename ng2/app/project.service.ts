@@ -8,4 +8,7 @@ export class ProjectService {
   getProjects() {
     return this._http.get('/projects').map(response => response.json());
   }
+  getProject(id:string) {
+    return this._http.get('/projects/' + id).map(response => response.json());
+  }
 }
