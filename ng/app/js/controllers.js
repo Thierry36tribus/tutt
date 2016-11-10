@@ -56,7 +56,18 @@ angular.module('tutt.controllers', [])
     .controller('NavCtrl', ['$scope',function($scope) {
     }])
     .controller('ProjectsCtrl', ['$scope','$http',function($scope,$http) {
-        
+        var setSumOfDay = function(sessions) {
+          var previous = 0
+          for (var i=sessions.length-1; i>= 0; i--){
+            sessions[i].sumOfDay = calcDuration(sessions[i]) + previous
+            if (i==0 || !moment(sessions[i].start).isSame(sessions[i-1].start,'day')) {
+              previous = 0
+            } else {
+              previous = sessions[i].sumOfDay
+            }
+          }
+        }  
+      
         var getProjects = function() {
             $scope.loadingProjects = true
             $http.get('/projects').success(function(projects){
@@ -71,6 +82,7 @@ angular.module('tutt.controllers', [])
             $http.get('/sessions').success(function(sessions){
                 $scope.loadingSessions = false
                 $scope.sessions = sessions
+                setSumOfDay($scope.sessions)
             })
             $scope.loadingStartedProject = true
             $http.get('/projects?started=true').success(function(startedProject){
@@ -126,21 +138,6 @@ angular.module('tutt.controllers', [])
         }
         $scope.isEndOfDay = function(session) {
             return searchIfIsEndOfDay($scope.sessions,session)
-        }
-        
-        $scope.sumOfDay = function(session) {
-          var sum = 0
-          for (var i=0; i < $scope.sessions.length; i++) {
-            sum += calcDuration(session)
-            if (session.id === $scope.sessions[i].id) {            
-              if (i == 0) {
-                return sum
-              }
-              if (!moment($scope.sessions[i].start).isSame($scope.sessions[i-1].start,'day')) {
-                return sum
-              }          
-            }
-          }
         }
     }])
    .controller('ProjectCtrl', ['$scope','$routeParams','$location','$http', function($scope,$routeParams,$location,$http) {

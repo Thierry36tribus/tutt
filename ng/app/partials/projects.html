@@ -20,7 +20,7 @@
         <ul class="list-unstyled">
             <li ng-repeat="session in sessions | orderBy:'start':true" >
                 <span class="hidden-xs">
-                    <div ng-show="isEndOfDay(session)" class="day-separator-all">{{session.start | date:'MM/dd'}} {{sumOfDay(session)/3600 | number:2}} h</div>
+                    <div ng-show="isEndOfDay(session)" class="day-separator-all">{{session.start | date:'MM/dd'}} {{session.sumOfDay/3600 | number:2}} h</div>
                 </span>
                 <span class="visible-xs">
                     <div ng-show="isEndOfDay(session)" class="day-separator-all">{{session.start | date:'dd'}}</div>
