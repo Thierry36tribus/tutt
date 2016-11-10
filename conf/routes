@@ -28,8 +28,8 @@ GET     /public/                                staticDir:public
 
 # Angular
 GET		/								Application.index
-#GET     /app/                           staticDir:ng/app
-GET     /app/                           staticDir:ng2
+GET     /app/                           staticDir:ng/app
+#GET     /app/                           staticDir:ng2
 
 
 # Catch all

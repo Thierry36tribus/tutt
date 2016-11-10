@@ -127,6 +127,21 @@ angular.module('tutt.controllers', [])
         $scope.isEndOfDay = function(session) {
             return searchIfIsEndOfDay($scope.sessions,session)
         }
+        
+        $scope.sumOfDay = function(session) {
+          var sum = 0
+          for (var i=0; i < $scope.sessions.length; i++) {
+            sum += calcDuration(session)
+            if (session.id === $scope.sessions[i].id) {            
+              if (i == 0) {
+                return sum
+              }
+              if (!moment($scope.sessions[i].start).isSame($scope.sessions[i-1].start,'day')) {
+                return sum
+              }          
+            }
+          }
+        }
     }])
    .controller('ProjectCtrl', ['$scope','$routeParams','$location','$http', function($scope,$routeParams,$location,$http) {
        var currentProject 
