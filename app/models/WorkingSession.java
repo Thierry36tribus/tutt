@@ -68,11 +68,11 @@ public class WorkingSession extends Model {
 	}
 
 	public static WorkingSession findNonStoppedSession() {
-		return find("byStopIsNull").first();
+		return find("stop is null and userId =?", Security.connectedUser().id).first();
 	}
 
 	public static List<WorkingSession> findByProject(final long projectId) {
-		return find("project.id =? and userId = ? order by start desc", projectId, Security.connectedUser().id).fetch();
+		return find("project.id =? and userId =? order by start desc", projectId, Security.connectedUser().id).fetch();
 	}
 
 	public String getStartAsStr() {

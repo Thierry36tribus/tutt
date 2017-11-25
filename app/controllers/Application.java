@@ -62,6 +62,7 @@ public class Application extends Controller {
 			startedProject = Project.findById(postedProject.id);
 			startedProject.start();
 		} else if (stop) {
+			Logger.debug("stop %s", startedProject);
 			if (startedProject != null) {
 				startedProject.stop();
 			}
