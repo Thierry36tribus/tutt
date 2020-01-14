@@ -23,4 +23,7 @@ server.pid
 build
 node_modules
 npm-debug.log
+application.conf
+pour_pusher.txt
+
 
